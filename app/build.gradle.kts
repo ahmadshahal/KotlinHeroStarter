@@ -103,10 +103,16 @@ dependencies {
     implementation(libs.ktor.client.okhttp)
     implementation(libs.ktor.client.auth)
     implementation(libs.ktor.client.content.negotiation)
-    implementation(libs.ktor.client.logging.jvm)
     implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.okhttp.logging)
 
     implementation(libs.kotlinx.serialization.json)
 
     implementation(libs.jakewharton.timber)
+
+    implementation(libs.androidx.security.crypto)
+
+    implementation(libs.androidx.datastore)
+    implementation(libs.androidx.datastore.core)
+    implementation(libs.androidx.datastore.preferences)
 }

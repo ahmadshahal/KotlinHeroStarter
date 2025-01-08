@@ -1,6 +1,6 @@
 package com.kotlinhero.starter.features.auth.presentation.states
 
-import com.kotlinhero.starter.core.utils.states.FetchState
+import com.kotlinhero.starter.core.foundation.utils.states.FetchState
 
 data class LoginState(
     val loginFetchState: FetchState<Unit> = FetchState.Initial(),

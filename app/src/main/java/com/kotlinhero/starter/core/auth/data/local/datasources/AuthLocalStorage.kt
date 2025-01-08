@@ -1,0 +1,86 @@
+package com.kotlinhero.starter.core.auth.data.local.datasources
+
+import androidx.datastore.core.DataStore
+import com.kotlinhero.starter.core.auth.data.local.models.UserPreferences
+import com.kotlinhero.starter.core.foundation.data.local.datasources.EncryptedKeyValueStore
+import com.kotlinhero.starter.core.foundation.data.local.datasources.KeyValueStore
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
+import org.koin.core.annotation.Factory
+
+private const val ACCESS_TOKEN_KEY = "accessToken"
+private const val REFRESH_TOKEN_KEY = "refreshToken"
+private const val ON_BOARDING_VISITED_TOKEN_KEY = "refreshToken"
+
+interface AuthLocalStorage {
+    val userFlow: Flow<UserPreferences>
+
+    suspend fun getAccessToken(): String?
+
+    suspend fun getUser(): UserPreferences?
+
+    suspend fun getRefreshToken(): String?
+
+    suspend fun setAccessToken(token: String)
+
+    suspend fun setRefreshToken(token: String)
+
+    suspend fun setUser(userPreferences: UserPreferences)
+
+    suspend fun isOnboardingVisited(): Boolean
+
+    suspend fun setOnboardingVisited()
+
+    suspend fun removeAccessToken()
+
+    suspend fun removeRefreshToken()
+
+    suspend fun removeUser()
+}
+
+@Factory(binds = [AuthLocalStorage::class])
+internal class AuthLocalStorageImpl(
+    private val encryptedKeyValueStore: EncryptedKeyValueStore,
+    private val keyValueStore: KeyValueStore,
+    private val userDataStore: DataStore<UserPreferences>,
+) : AuthLocalStorage {
+
+    override val userFlow: Flow<UserPreferences>
+        get() = userDataStore.data
+
+    override suspend fun getAccessToken(): String? =
+        encryptedKeyValueStore.getString(ACCESS_TOKEN_KEY)
+
+    override suspend fun getUser(): UserPreferences? =
+        userDataStore.data.firstOrNull()
+
+    override suspend fun getRefreshToken(): String? =
+        encryptedKeyValueStore.getString(REFRESH_TOKEN_KEY)
+
+    override suspend fun setAccessToken(token: String) =
+        encryptedKeyValueStore.putString(ACCESS_TOKEN_KEY, token)
+
+    override suspend fun setRefreshToken(token: String) =
+        encryptedKeyValueStore.putString(REFRESH_TOKEN_KEY, token)
+
+    override suspend fun setUser(userPreferences: UserPreferences) {
+        userDataStore.updateData { userPreferences }
+    }
+
+    override suspend fun isOnboardingVisited(): Boolean =
+        keyValueStore.getBoolean(ON_BOARDING_VISITED_TOKEN_KEY).first() ?: false
+
+    override suspend fun setOnboardingVisited() =
+        keyValueStore.putBoolean(ON_BOARDING_VISITED_TOKEN_KEY, true)
+
+    override suspend fun removeAccessToken() =
+        encryptedKeyValueStore.remove(ACCESS_TOKEN_KEY)
+
+    override suspend fun removeRefreshToken() =
+        encryptedKeyValueStore.remove(REFRESH_TOKEN_KEY)
+
+    override suspend fun removeUser() {
+        userDataStore.updateData { UserPreferences() }
+    }
+}

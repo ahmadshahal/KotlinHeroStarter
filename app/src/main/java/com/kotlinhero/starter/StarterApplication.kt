@@ -1,8 +1,11 @@
 package com.kotlinhero.starter
 
 import android.app.Application
-import com.kotlinhero.starter.core.di.KtorModule
-import com.kotlinhero.starter.core.domain.flavors.BuildType
+import com.kotlinhero.starter.core.CoreModule
+import com.kotlinhero.starter.core.foundation.di.EncryptedSharedPreferencesModule
+import com.kotlinhero.starter.core.foundation.di.KtorModule
+import com.kotlinhero.starter.core.foundation.di.PreferencesDataStoreModule
+import com.kotlinhero.starter.core.foundation.domain.flavors.BuildType
 import com.kotlinhero.starter.features.auth.LoginModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -16,7 +19,7 @@ import timber.log.Timber
 class StarterApplication : Application(), KoinStartup {
     override fun onCreate() {
         super.onCreate()
-        if(BuildType.current() == BuildType.DEBUG) {
+        if (BuildType.current() == BuildType.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
     }
@@ -24,6 +27,12 @@ class StarterApplication : Application(), KoinStartup {
     override fun onKoinStartup() = KoinConfiguration {
         androidLogger()
         androidContext(this@StarterApplication)
-        modules(LoginModule().module, KtorModule().module)
+        modules(
+            LoginModule().module,
+            KtorModule().module,
+            EncryptedSharedPreferencesModule().module,
+            PreferencesDataStoreModule().module,
+            CoreModule().module,
+        )
     }
 }
