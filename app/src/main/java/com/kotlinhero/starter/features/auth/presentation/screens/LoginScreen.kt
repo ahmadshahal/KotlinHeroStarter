@@ -6,10 +6,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -23,6 +25,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.kotlinhero.starter.features.auth.presentation.viewmodels.LoginViewModel
+import com.kotlinhero.starter.ui.theme.starterColors
 import org.koin.androidx.compose.koinViewModel
 
 class LoginScreen : Screen {
@@ -45,7 +48,9 @@ class LoginScreen : Screen {
             }
         ) { innerPadding ->
             Column(
-                modifier = Modifier.fillMaxSize().padding(paddingValues = innerPadding),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues = innerPadding),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
             ) {
@@ -59,8 +64,14 @@ class LoginScreen : Screen {
                     onValueChange = viewModel::onPasswordChange
                 )
                 Spacer(modifier = Modifier.height(48.dp))
-                ElevatedButton(onClick = viewModel::login) {
-                    when(state.loginFetchState.isLoading) {
+                ElevatedButton(
+                    onClick = viewModel::login,
+                    colors = ButtonDefaults.elevatedButtonColors(
+                        containerColor = MaterialTheme.starterColors.red,
+                        contentColor = MaterialTheme.starterColors.white
+                    )
+                ) {
+                    when (state.loginFetchState.isLoading) {
                         true -> CircularProgressIndicator()
                         false -> Text("Login")
                     }
