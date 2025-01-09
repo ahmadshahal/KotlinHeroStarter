@@ -22,7 +22,7 @@ data class StarterColors(
     val secondaryTextColor: Color = Color(0xFF7D848D),
     val darkText: Color = Color(0xFF1B1E28),
     val transparent: Color = Color.Transparent,
-    val back: Color = Color(0xFFF8F8F8),
+    val background: Color = Color(0xFFF8F8F8),
     val red: Color = Color(0xFFBA3232),
     val error: Color = Color(0xFFF16262),
     val primary: Color = Color(0xFF40B8E2),

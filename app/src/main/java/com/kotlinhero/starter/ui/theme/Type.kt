@@ -1,102 +1,94 @@
 package com.kotlinhero.starter.ui.theme
 
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.kotlinhero.starter.R
 
-// Set of Material typography styles to start with
-val Typography = Typography(
-    bodyLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
-    )
-    /* Other default text styles to override    titleLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 22.sp,
-        lineHeight = 28.sp,
-        letterSpacing = 0.sp
-    ),
-    labelSmall = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Medium,
-        fontSize = 11.sp,
-        lineHeight = 16.sp,
-        letterSpacing = 0.5.sp
-    )
-    */
+
+val plusJakarta = FontFamily(
+    Font(R.font.plus_jakarta_regular, FontWeight.Normal, FontStyle.Normal),
+    Font(R.font.plus_jakarta_italic, FontWeight.Normal, FontStyle.Italic),
+    Font(R.font.plus_jakarta_light, FontWeight.Light, FontStyle.Normal),
+    Font(R.font.plus_jakarta_lightitalic, FontWeight.Light, FontStyle.Italic),
+    Font(R.font.plus_jakarta_medium, FontWeight.Medium, FontStyle.Normal),
+    Font(R.font.plus_jakarta_mediumitalic, FontWeight.Medium, FontStyle.Italic),
+    Font(R.font.plus_jakarta_semibold, FontWeight.SemiBold, FontStyle.Normal),
+    Font(R.font.plus_jakarta_semibolditalic, FontWeight.SemiBold, FontStyle.Italic),
+    Font(R.font.plus_jakarta_bold, FontWeight.Bold, FontStyle.Normal),
+    Font(R.font.plus_jakarta_bolditalic, FontWeight.Bold, FontStyle.Italic),
+    Font(R.font.plus_jakarta_extrabold, FontWeight.ExtraBold, FontStyle.Normal),
+    Font(R.font.plus_jakarta_extrabolditalic, FontWeight.ExtraBold, FontStyle.Italic),
+    Font(R.font.plus_jakarta_extralight, FontWeight.ExtraLight, FontStyle.Normal),
+    Font(R.font.plus_jakarta_extralightitalic, FontWeight.ExtraLight, FontStyle.Italic)
 )
 
 data class StarterTypography(
-    // Headings
     val displayOne: TextStyle = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = plusJakarta,
         fontSize = 44.sp,
         fontWeight = FontWeight.Bold,
         lineHeight = (44.sp * 1.2).value.sp // 52.8.sp
     ),
 
     val displayTwo: TextStyle = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = plusJakarta,
         fontSize = 40.sp,
         fontWeight = FontWeight.Bold,
         lineHeight = (40.sp * 1.2).value.sp // 48.sp
     ),
 
     val displayThree: TextStyle = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = plusJakarta,
         fontSize = 32.sp,
         fontWeight = FontWeight.Bold,
         lineHeight = (32.sp * 1.2).value.sp // 38.4.sp
     ),
 
     val headingOne: TextStyle = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = plusJakarta,
         fontSize = 28.sp,
         fontWeight = FontWeight.Bold,
         lineHeight = (28.sp * 1.2).value.sp // 33.6.sp
     ),
 
     val headingTwo: TextStyle = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = plusJakarta,
         fontSize = 24.sp,
         fontWeight = FontWeight.Bold,
         lineHeight = (24.sp * 1.2).value.sp // 28.8.sp
     ),
 
     val headingThree: TextStyle = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = plusJakarta,
         fontSize = 20.sp,
         fontWeight = FontWeight.Bold,
         lineHeight = (20.sp * 1.2).value.sp // 24.sp
     ),
 
     val headingFour: TextStyle = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = plusJakarta,
         fontSize = 18.sp,
         fontWeight = FontWeight.Bold,
         lineHeight = (18.sp * 1.2).value.sp // 21.6.sp
     ),
 
-    // Body
     val bodyBold: TextStyle = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = plusJakarta,
         fontSize = 18.sp,
         fontWeight = FontWeight.Bold,
         lineHeight = (18.sp * 1.2).value.sp // 21.6.sp
     ),
 
     val bodySemiBold: TextStyle = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = plusJakarta,
         fontSize = 18.sp,
         fontWeight = FontWeight.SemiBold,
         lineHeight = (18.sp * 1.2).value.sp // 21.6.sp
@@ -104,7 +96,7 @@ data class StarterTypography(
 
     val bodyMedium: TextStyle = TextStyle(
 
-        fontFamily = FontFamily.Default,
+        fontFamily = plusJakarta,
         fontSize = 18.sp,
         fontWeight = FontWeight.Medium,
         lineHeight = (18.sp * 1.2).value.sp // 21.6.sp
@@ -112,7 +104,7 @@ data class StarterTypography(
 
     val bodyRegular: TextStyle = TextStyle(
 
-        fontFamily = FontFamily.Default,
+        fontFamily = plusJakarta,
         fontSize = 18.sp,
         fontWeight = FontWeight.Normal,
         lineHeight = (18.sp * 1.5).value.sp // 27.sp
@@ -120,7 +112,7 @@ data class StarterTypography(
 
     val bodySmallBold: TextStyle = TextStyle(
 
-        fontFamily = FontFamily.Default,
+        fontFamily = plusJakarta,
         fontSize = 16.sp,
         fontWeight = FontWeight.Bold,
         lineHeight = (16.sp * 1.2).value.sp // 19.2.sp
@@ -128,7 +120,7 @@ data class StarterTypography(
 
     val bodySmallSemiBold: TextStyle = TextStyle(
 
-        fontFamily = FontFamily.Default,
+        fontFamily = plusJakarta,
         fontSize = 16.sp,
         fontWeight = FontWeight.SemiBold,
         lineHeight = (16.sp * 1.2).value.sp // 19.2.sp
@@ -136,7 +128,7 @@ data class StarterTypography(
 
     val bodySmallMedium: TextStyle = TextStyle(
 
-        fontFamily = FontFamily.Default,
+        fontFamily = plusJakarta,
         fontSize = 16.sp,
         fontWeight = FontWeight.Medium,
         lineHeight = (16.sp * 1.2).value.sp // 19.2.sp
@@ -144,7 +136,7 @@ data class StarterTypography(
 
     val bodySmallRegular: TextStyle = TextStyle(
 
-        fontFamily = FontFamily.Default,
+        fontFamily = plusJakarta,
         fontSize = 16.sp,
         fontWeight = FontWeight.Normal,
         lineHeight = (16.sp * 1.5).value.sp // 24.sp
@@ -152,7 +144,7 @@ data class StarterTypography(
 
     val body14Bold: TextStyle = TextStyle(
 
-        fontFamily = FontFamily.Default,
+        fontFamily = plusJakarta,
         fontSize = 14.sp,
         fontWeight = FontWeight.Bold,
         lineHeight = (14.sp * 1.2).value.sp // 16.8.sp
@@ -160,7 +152,7 @@ data class StarterTypography(
 
     val body14SemiBold: TextStyle = TextStyle(
 
-        fontFamily = FontFamily.Default,
+        fontFamily = plusJakarta,
         fontSize = 14.sp,
         fontWeight = FontWeight.SemiBold,
         lineHeight = (14.sp * 1.2).value.sp // 16.8.sp
@@ -168,7 +160,7 @@ data class StarterTypography(
 
     val body16SemiBold: TextStyle = TextStyle(
 
-        fontFamily = FontFamily.Default,
+        fontFamily = plusJakarta,
         fontSize = 16.sp,
         fontWeight = FontWeight.SemiBold,
         lineHeight = (16.sp * 1.2).value.sp // 16.8.sp
@@ -176,7 +168,7 @@ data class StarterTypography(
 
     val body18SemiBold: TextStyle = TextStyle(
 
-        fontFamily = FontFamily.Default,
+        fontFamily = plusJakarta,
         fontSize = 18.sp,
         fontWeight = FontWeight.SemiBold,
         lineHeight = (18.sp * 1.2).value.sp // 16.8.sp
@@ -184,7 +176,7 @@ data class StarterTypography(
 
     val body18Medium: TextStyle = TextStyle(
 
-        fontFamily = FontFamily.Default,
+        fontFamily = plusJakarta,
         fontSize = 18.sp,
         fontWeight = FontWeight.Medium,
         lineHeight = (18.sp * 1.2).value.sp // 16.8.sp
@@ -192,7 +184,7 @@ data class StarterTypography(
 
     val body14Medium: TextStyle = TextStyle(
 
-        fontFamily = FontFamily.Default,
+        fontFamily = plusJakarta,
         fontSize = 14.sp,
         fontWeight = FontWeight.Medium,
         lineHeight = (14.sp * 1.2).value.sp // 16.8.sp
@@ -200,7 +192,7 @@ data class StarterTypography(
 
     val body14Regular: TextStyle = TextStyle(
 
-        fontFamily = FontFamily.Default,
+        fontFamily = plusJakarta,
         fontSize = 14.sp,
         fontWeight = FontWeight.Normal,
         lineHeight = (14.sp * 1.5).value.sp // 21.sp
@@ -208,7 +200,7 @@ data class StarterTypography(
 
     val body16Regular: TextStyle = TextStyle(
 
-        fontFamily = FontFamily.Default,
+        fontFamily = plusJakarta,
         fontSize = 16.sp,
         fontWeight = FontWeight.Normal,
         lineHeight = (16.sp * 1.5).value.sp
@@ -216,7 +208,7 @@ data class StarterTypography(
 
     val body12SemiBold: TextStyle = TextStyle(
 
-        fontFamily = FontFamily.Default,
+        fontFamily = plusJakarta,
         fontSize = 12.sp,
         fontWeight = FontWeight.SemiBold,
         lineHeight = (12.sp * 1.2).value.sp // 14.4.sp
@@ -224,7 +216,7 @@ data class StarterTypography(
 
     val body12Medium: TextStyle = TextStyle(
 
-        fontFamily = FontFamily.Default,
+        fontFamily = plusJakarta,
         fontSize = 12.sp,
         fontWeight = FontWeight.Medium,
         lineHeight = (12.sp * 1.2).value.sp // 14.4.sp
@@ -232,7 +224,7 @@ data class StarterTypography(
 
     val body12Regular: TextStyle = TextStyle(
 
-        fontFamily = FontFamily.Default,
+        fontFamily = plusJakarta,
         fontSize = 12.sp,
         fontWeight = FontWeight.Normal,
         lineHeight = (12.sp * 1.5).value.sp // 18.sp
@@ -240,7 +232,7 @@ data class StarterTypography(
 
     val body10SemiBold: TextStyle = TextStyle(
 
-        fontFamily = FontFamily.Default,
+        fontFamily = plusJakarta,
         fontSize = 10.sp,
         fontWeight = FontWeight.SemiBold,
         lineHeight = (10.sp * 1.2).value.sp // 12.sp
@@ -248,7 +240,7 @@ data class StarterTypography(
 
     val body10Medium: TextStyle = TextStyle(
 
-        fontFamily = FontFamily.Default,
+        fontFamily = plusJakarta,
         fontSize = 10.sp,
         fontWeight = FontWeight.Medium,
         lineHeight = (10.sp * 1.2).value.sp // 12.sp
@@ -256,7 +248,7 @@ data class StarterTypography(
 
     val body10Regular: TextStyle = TextStyle(
 
-        fontFamily = FontFamily.Default,
+        fontFamily = plusJakarta,
         fontSize = 10.sp,
         fontWeight = FontWeight.Normal,
         lineHeight = (10.sp * 1.5).value.sp // 15.sp
