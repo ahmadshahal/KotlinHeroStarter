@@ -7,6 +7,7 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import cafe.adriel.voyager.navigator.Navigator
+import cafe.adriel.voyager.transitions.FadeTransition
 import com.kotlinhero.starter.features.auth.presentation.screens.LoginScreen
 import com.kotlinhero.starter.ui.theme.StarterTheme
 
@@ -21,7 +22,9 @@ class MainActivity : ComponentActivity() {
         )
         setContent {
             StarterTheme {
-                Navigator(LoginScreen())
+                Navigator(LoginScreen()) { navigator ->
+                    FadeTransition(navigator)
+                }
             }
         }
     }

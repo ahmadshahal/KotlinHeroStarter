@@ -19,21 +19,25 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import cafe.adriel.voyager.core.annotation.ExperimentalVoyagerApi
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import cafe.adriel.voyager.transitions.ScreenTransition
 import com.kotlinhero.starter.R
 import com.kotlinhero.starter.core.foundation.presentation.components.ErrorDialog
 import com.kotlinhero.starter.core.foundation.presentation.components.LoadingDialog
 import com.kotlinhero.starter.core.foundation.presentation.reusables.buttons.NormalButton
 import com.kotlinhero.starter.core.foundation.presentation.reusables.textfields.NormalTextField
 import com.kotlinhero.starter.core.foundation.presentation.reusables.topbar.DefaultTopBar
+import com.kotlinhero.starter.core.foundation.utils.voyager.transitions.SlideTransition
 import com.kotlinhero.starter.features.auth.presentation.viewmodels.RegisterViewModel
 import com.kotlinhero.starter.ui.theme.starterColors
 import com.kotlinhero.starter.ui.theme.starterTypography
 import org.koin.androidx.compose.koinViewModel
 
-class RegisterScreen : Screen {
+@OptIn(ExperimentalVoyagerApi::class)
+class RegisterScreen : Screen, ScreenTransition by SlideTransition() {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
