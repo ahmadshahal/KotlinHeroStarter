@@ -5,7 +5,7 @@ import com.kotlinhero.starter.core.foundation.utils.exceptions.FailedToRefreshTo
 import com.kotlinhero.starter.core.foundation.utils.failures.Failure
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
-import okhttp3.Interceptor.*
+import okhttp3.Interceptor.Chain
 import okhttp3.Request
 import okhttp3.Response
 import org.koin.core.component.KoinComponent
@@ -39,7 +39,7 @@ class AuthInterceptor : Interceptor, KoinComponent {
                         newRequestWithAccessToken(
                             request = chain.request(),
                             accessToken = newAccessToken,
-                            overrideHeader = true
+                            overrideAuthorizationHeader = true
                         )
                     )
                 }
@@ -51,10 +51,10 @@ class AuthInterceptor : Interceptor, KoinComponent {
     private fun newRequestWithAccessToken(
         request: Request,
         accessToken: String,
-        overrideHeader: Boolean = false
+        overrideAuthorizationHeader: Boolean = false
     ): Request {
         // Check if the request already has the Authorization header
-        if (request.header("Authorization") != null && !overrideHeader) {
+        if (request.header("Authorization") != null && !overrideAuthorizationHeader) {
             return request
         }
         return request.newBuilder()

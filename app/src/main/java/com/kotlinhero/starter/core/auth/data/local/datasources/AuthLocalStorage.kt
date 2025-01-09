@@ -11,7 +11,7 @@ import org.koin.core.annotation.Factory
 
 private const val ACCESS_TOKEN_KEY = "accessToken"
 private const val REFRESH_TOKEN_KEY = "refreshToken"
-private const val ON_BOARDING_VISITED_TOKEN_KEY = "refreshToken"
+private const val ONBOARDING_VISITED_TOKEN_KEY = "onboardingVisited"
 
 interface AuthLocalStorage {
     val userFlow: Flow<UserPreferences>
@@ -69,10 +69,10 @@ internal class AuthLocalStorageImpl(
     }
 
     override suspend fun isOnboardingVisited(): Boolean =
-        keyValueStore.getBoolean(ON_BOARDING_VISITED_TOKEN_KEY).first() ?: false
+        keyValueStore.getBoolean(ONBOARDING_VISITED_TOKEN_KEY).first() ?: false
 
     override suspend fun setOnboardingVisited() =
-        keyValueStore.putBoolean(ON_BOARDING_VISITED_TOKEN_KEY, true)
+        keyValueStore.putBoolean(ONBOARDING_VISITED_TOKEN_KEY, true)
 
     override suspend fun removeAccessToken() =
         encryptedKeyValueStore.remove(ACCESS_TOKEN_KEY)

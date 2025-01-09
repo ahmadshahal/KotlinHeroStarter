@@ -25,6 +25,10 @@ class LoginViewModel(
     fun onPasswordChange(password: String) =
         mutableState.update { it.copy(password = password) }
 
+    fun resetFetchState() = mutableState.update {
+        it.copy(loginFetchState = FetchState.Initial())
+    }
+
     fun login() {
         viewModelScope.launch {
             mutableState.update { it.copy(loginFetchState = FetchState.Loading()) }
