@@ -7,4 +7,6 @@ import kotlinx.serialization.Serializable
 data class UserPreferences(
     @SerialName("email")
     val email: String = "",
+    @SerialName("fullName")
+    val fullName: String = "",
 )

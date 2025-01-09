@@ -15,8 +15,10 @@ fun LoginCredentials.toLoginCredentialsDto() = LoginCredentialsDto(
 fun RegisterCredentials.toRegisterCredentialsDto() = RegisterCredentialsDto(
     email = email,
     password = password,
+    fullName = fullName,
 )
 
 fun UserDto.toUserPreferences() = UserPreferences(
     email = email,
+    fullName = fullName,
 )

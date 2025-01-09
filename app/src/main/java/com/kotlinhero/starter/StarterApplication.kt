@@ -6,13 +6,13 @@ import com.kotlinhero.starter.core.foundation.di.EncryptedSharedPreferencesModul
 import com.kotlinhero.starter.core.foundation.di.KtorModule
 import com.kotlinhero.starter.core.foundation.di.PreferencesDataStoreModule
 import com.kotlinhero.starter.core.foundation.domain.flavors.BuildType
-import com.kotlinhero.starter.features.auth.LoginModule
+import com.kotlinhero.starter.features.auth.AuthModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androix.startup.KoinStartup
 import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.dsl.KoinConfiguration
-import org.koin.ksp.generated.*
+import org.koin.ksp.generated.module
 import timber.log.Timber
 
 @OptIn(KoinExperimentalAPI::class)
@@ -28,7 +28,7 @@ class StarterApplication : Application(), KoinStartup {
         androidLogger()
         androidContext(this@StarterApplication)
         modules(
-            LoginModule().module,
+            AuthModule().module,
             KtorModule().module,
             EncryptedSharedPreferencesModule().module,
             PreferencesDataStoreModule().module,

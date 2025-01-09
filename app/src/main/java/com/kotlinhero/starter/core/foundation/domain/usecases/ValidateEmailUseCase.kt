@@ -6,6 +6,9 @@ import org.koin.core.annotation.Factory
 @Factory
 class ValidateEmailUseCase {
     operator fun invoke(email: String): String? {
+        if(email.trim().isBlank()) {
+            return "Your email can't be empty"
+        }
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             return "Invalid email"
         }

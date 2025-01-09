@@ -8,6 +8,9 @@ data class RegisterCredentialsDto(
     @SerialName("email")
     val email: String,
 
+    @SerialName("fullName")
+    val fullName: String,
+
     @SerialName("password")
     val password: String,
 )
