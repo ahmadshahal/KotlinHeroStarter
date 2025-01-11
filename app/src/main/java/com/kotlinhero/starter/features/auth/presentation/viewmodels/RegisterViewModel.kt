@@ -3,12 +3,12 @@ package com.kotlinhero.starter.features.auth.presentation.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kotlinhero.starter.core.auth.domain.entities.RegisterCredentials
+import com.kotlinhero.starter.core.auth.domain.usecases.RegisterUseCase
 import com.kotlinhero.starter.core.foundation.domain.usecases.ValidateEmailUseCase
 import com.kotlinhero.starter.core.foundation.domain.usecases.ValidateFullNameUseCase
 import com.kotlinhero.starter.core.foundation.domain.usecases.ValidatePasswordUseCase
-import com.kotlinhero.starter.core.foundation.utils.states.FetchState
+import com.kotlinhero.starter.core.foundation.utils.states.ResultState
 import com.kotlinhero.starter.core.foundation.utils.states.ValidationState
-import com.kotlinhero.starter.features.auth.domain.usecases.RegisterUseCase
 import com.kotlinhero.starter.features.auth.presentation.states.RegisterState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -48,18 +48,17 @@ class RegisterViewModel(
     }
 
     fun resetFetchState() = mutableState.update {
-        it.copy(registerFetchState = FetchState.Initial())
+        it.copy(registerResultState = ResultState.Initial())
     }
 
     fun register() {
         validateEmail()
         validatePassword()
         validateFullName()
-        if(mutableState.value.isInvalid()) {
-            return
-        }
+        if(mutableState.value.isInvalid()) return
+
         viewModelScope.launch {
-            mutableState.update { it.copy(registerFetchState = FetchState.Loading()) }
+            mutableState.update { it.copy(registerResultState = ResultState.Loading()) }
 
             val registerCredentials = RegisterCredentials(
                 email = mutableState.value.email,
@@ -71,12 +70,12 @@ class RegisterViewModel(
             result.fold(
                 onLeft = { failure ->
                     mutableState.update {
-                        it.copy(registerFetchState = FetchState.Error(failure))
+                        it.copy(registerResultState = ResultState.Error(failure))
                     }
                 },
                 onRight = {
                     mutableState.update {
-                        it.copy(registerFetchState = FetchState.Success(Unit))
+                        it.copy(registerResultState = ResultState.Success(Unit))
                     }
                 },
             )

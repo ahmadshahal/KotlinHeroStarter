@@ -3,6 +3,7 @@ package com.kotlinhero.starter.core.foundation.data.local.datasources
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.byteArrayPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
@@ -33,6 +34,10 @@ interface KeyValueStore {
     fun getLong(key: String): Flow<Long?>
 
     suspend fun putLong(key: String, value: Long)
+
+    fun getByteArray(key: String): Flow<ByteArray?>
+
+    suspend fun putByteArray(key: String, value: ByteArray)
 
     suspend fun remove(key: String)
 
@@ -101,6 +106,18 @@ internal class KeyValueStoreImpl(
     override suspend fun putLong(key: String, value: Long) {
         dataStore.edit { preferences ->
             preferences[longPreferencesKey(key)] = value
+        }
+    }
+
+    override fun getByteArray(key: String): Flow<ByteArray?> {
+        return dataStore.data.map { preferences ->
+            preferences[byteArrayPreferencesKey(key)]
+        }
+    }
+
+    override suspend fun putByteArray(key: String, value: ByteArray) {
+        dataStore.edit { preferences ->
+            preferences[byteArrayPreferencesKey(key)] = value
         }
     }
 

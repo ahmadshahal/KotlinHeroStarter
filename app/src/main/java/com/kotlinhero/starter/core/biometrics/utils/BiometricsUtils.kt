@@ -1,0 +1,91 @@
+package com.kotlinhero.starter.core.biometrics.utils
+
+import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
+import timber.log.Timber
+
+object BiometricPromptUtils {
+
+    // Tag used for logging purposes, identifies the source of log messages.
+    private const val TAG = "BiometricPromptUtils"
+
+    /**
+     * Creates a [BiometricPrompt] instance, used to display a biometric authentication dialog.
+     *
+     * @param activity The [AppCompatActivity] context required to attach the BiometricPrompt to the UI.
+     * @param onSuccess A callback function invoked upon successful authentication, receiving the [BiometricPrompt.AuthenticationResult].
+     * @return A configured [BiometricPrompt] instance.
+     */
+    fun createBiometricPrompt(
+        activity: AppCompatActivity,
+        onSuccess: (BiometricPrompt.AuthenticationResult) -> Unit,
+        onFailure: () -> Unit = {},
+    ): BiometricPrompt {
+        // Executor to run callback operations on the main thread (UI thread).
+        val executor = ContextCompat.getMainExecutor(activity)
+
+        // AuthenticationCallback handles biometric events such as success, error, or failure.
+        val callback = object : BiometricPrompt.AuthenticationCallback() {
+
+            /**
+             * Called when an unrecoverable error occurs during authentication.
+             *
+             * @param errCode An integer representing the type of error.
+             * @param errString A description of the error for display purposes.
+             */
+            override fun onAuthenticationError(errCode: Int, errString: CharSequence) {
+                super.onAuthenticationError(errCode, errString)
+                Timber.tag(TAG).d("errCode is $errCode and errString is: $errString")
+                onFailure()
+            }
+
+            /**
+             * Called when the biometric is valid but not recognized (e.g., fingerprint mismatch).
+             * This indicates the authentication attempt failed.
+             */
+            override fun onAuthenticationFailed() {
+                super.onAuthenticationFailed()
+                Timber.tag(TAG).d("User biometric rejected.")
+                onFailure()
+            }
+
+            /**
+             * Called when the authentication is successful, and a valid biometric is recognized.
+             *
+             * @param result The result of the successful authentication, containing crypto or user-related data.
+             */
+            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                super.onAuthenticationSucceeded(result)
+                Timber.tag(TAG).d("Authentication was successful")
+                onSuccess(result) // Pass the successful result to the provided callback.
+            }
+        }
+
+        // Return a BiometricPrompt instance, configured with the activity, executor, and callback.
+        return BiometricPrompt(activity, executor, callback)
+    }
+
+    /**
+     * Creates and returns a [BiometricPrompt.PromptInfo] object, which defines the UI and behavior of the biometric prompt.
+     *
+     * @return A configured [BiometricPrompt.PromptInfo] instance.
+     */
+    fun createPromptInfo(): BiometricPrompt.PromptInfo =
+        BiometricPrompt.PromptInfo.Builder().apply {
+            // Title displayed at the top of the biometric dialog.
+            setTitle("Starter App Authentication")
+
+            // Subtitle displayed below the title in smaller font.
+            setSubtitle("Please login to get access")
+
+            // Description providing additional context to the user.
+            setDescription("Starter App is using Android biometric authentication.")
+
+            // Determines if a confirmation step is required after successful authentication.
+            setConfirmationRequired(false)
+
+            // The text of the button displayed as an alternative to biometric authentication.
+            setNegativeButtonText("Use app password")
+        }.build()
+}

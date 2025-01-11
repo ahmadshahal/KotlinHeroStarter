@@ -5,21 +5,25 @@ import com.kotlinhero.starter.core.auth.data.local.models.UserPreferences
 import com.kotlinhero.starter.core.auth.data.mappers.toLoginCredentialsDto
 import com.kotlinhero.starter.core.auth.data.mappers.toRegisterCredentialsDto
 import com.kotlinhero.starter.core.auth.data.mappers.toUserPreferences
+import com.kotlinhero.starter.core.auth.data.remote.api.AuthApi
+import com.kotlinhero.starter.core.auth.domain.entities.AuthorizationTokens
+import com.kotlinhero.starter.core.auth.domain.entities.LoginCredentials
+import com.kotlinhero.starter.core.auth.domain.entities.RegisterCredentials
+import com.kotlinhero.starter.core.biometrics.domain.entities.CipherText
 import com.kotlinhero.starter.core.foundation.data.repositories.BaseRepository
 import com.kotlinhero.starter.core.foundation.utils.Either
 import com.kotlinhero.starter.core.foundation.utils.failures.Failure
-import com.kotlinhero.starter.core.auth.data.remote.api.AuthApi
-import com.kotlinhero.starter.core.auth.domain.entities.LoginCredentials
-import com.kotlinhero.starter.core.auth.domain.entities.RegisterCredentials
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.StateFlow
-
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.core.annotation.Single
 
 interface SessionManager {
@@ -36,11 +40,17 @@ interface SessionManager {
 
     suspend fun refreshToken(accessToken: String): Either<Failure, String>
 
-    suspend fun login(loginCredentials: LoginCredentials): Either<Failure, Unit>
+    suspend fun login(loginCredentials: LoginCredentials): Either<Failure, AuthorizationTokens>
 
-    suspend fun register(registerCredentials: RegisterCredentials): Either<Failure, Unit>
+    suspend fun login(refreshToken: String)
 
-    suspend fun logout(): Either<Failure, Unit>
+    suspend fun getSecretToken(): CipherText?
+
+    suspend fun saveSecretToken(cipherText: CipherText)
+
+    suspend fun register(registerCredentials: RegisterCredentials): Either<Failure, AuthorizationTokens>
+
+    suspend fun logout(permanently: Boolean = false): Either<Failure, Unit>
 
     suspend fun triggerForceLogout()
 }
@@ -75,7 +85,8 @@ internal class SessionManagerImpl(
     override val forceLogoutFlow: SharedFlow<Unit> get() = _forceLogoutFlow
 
     init {
-        runBlocking {
+        // TODO: Consider another alternatives..
+        CoroutineScope(Dispatchers.Default).launch {
             loadTokens()
         }
     }
@@ -83,13 +94,13 @@ internal class SessionManagerImpl(
     private suspend fun loadTokens() {
         _accessToken.value = authLocalStorage.getAccessToken()
         _refreshToken.value = authLocalStorage.getRefreshToken()
-        _isLoggedInFlow.value = !accessToken.value.isNullOrEmpty()
+        _isLoggedInFlow.value = !refreshToken.value.isNullOrEmpty()
     }
 
     override suspend fun refreshToken(accessToken: String): Either<Failure, String> {
         // Only one coroutine is allowed to refreshToken at one time.
         return withContext(Dispatchers.IO.limitedParallelism(1)) {
-            if(accessToken != _accessToken.value) {
+            if (accessToken != _accessToken.value) {
                 // Token has been refreshed by another coroutine while waiting for the semaphore.
                 return@withContext Either.Right(_accessToken.value ?: "")
             }
@@ -105,34 +116,54 @@ internal class SessionManagerImpl(
         }
     }
 
-    override suspend fun login(loginCredentials: LoginCredentials): Either<Failure, Unit> {
+    override suspend fun login(loginCredentials: LoginCredentials): Either<Failure, AuthorizationTokens> {
         return safeApiCall {
             val authorizationDetails = authApi.login(loginCredentials.toLoginCredentialsDto())
             saveAccessToken(authorizationDetails.accessToken)
             saveRefreshToken(authorizationDetails.refreshToken)
             saveUser(authorizationDetails.user.toUserPreferences())
+            AuthorizationTokens(
+                accessToken = authorizationDetails.accessToken,
+                refreshToken = authorizationDetails.refreshToken
+            )
         }
     }
 
-    override suspend fun register(registerCredentials: RegisterCredentials): Either<Failure, Unit> {
+    override suspend fun login(refreshToken: String) {
+        // This type does not save the user locally and should be fetched from the server.
+        _refreshToken.value = refreshToken
+        saveRefreshToken(refreshToken)
+    }
+
+    override suspend fun getSecretToken(): CipherText? =
+        authLocalStorage.getSecretToken()
+
+    override suspend fun saveSecretToken(cipherText: CipherText) =
+        authLocalStorage.setSecretToken(cipherText)
+
+    override suspend fun register(registerCredentials: RegisterCredentials): Either<Failure, AuthorizationTokens> {
         return safeApiCall {
             val authorizationDetails =
                 authApi.register(registerCredentials.toRegisterCredentialsDto())
             saveAccessToken(authorizationDetails.accessToken)
             saveRefreshToken(authorizationDetails.refreshToken)
             saveUser(authorizationDetails.user.toUserPreferences())
+            AuthorizationTokens(
+                accessToken = authorizationDetails.accessToken,
+                refreshToken = authorizationDetails.refreshToken
+            )
         }
     }
 
-    override suspend fun logout(): Either<Failure, Unit> {
+    override suspend fun logout(permanently: Boolean): Either<Failure, Unit> {
         return safeApiCall {
             authApi.logout()
-            clearSession()
+            clearSession(permanently = permanently)
         }
     }
 
     override suspend fun triggerForceLogout() {
-        clearSession()
+        clearSession(permanently = true)
         _forceLogoutFlow.tryEmit(Unit)
     }
 
@@ -151,9 +182,10 @@ internal class SessionManagerImpl(
         authLocalStorage.setUser(userPreferences)
     }
 
-    private suspend fun clearSession() {
+    private suspend fun clearSession(permanently: Boolean) {
         _accessToken.value = null
         _refreshToken.value = null
+        if(permanently) authLocalStorage.removeSecretToken()
         authLocalStorage.removeAccessToken()
         authLocalStorage.removeRefreshToken()
         authLocalStorage.removeUser()

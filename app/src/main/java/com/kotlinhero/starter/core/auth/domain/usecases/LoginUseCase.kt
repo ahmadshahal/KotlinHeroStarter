@@ -1,4 +1,4 @@
-package com.kotlinhero.starter.features.auth.domain.usecases
+package com.kotlinhero.starter.core.auth.domain.usecases
 
 import com.kotlinhero.starter.core.auth.data.SessionManager
 import com.kotlinhero.starter.core.auth.domain.entities.LoginCredentials

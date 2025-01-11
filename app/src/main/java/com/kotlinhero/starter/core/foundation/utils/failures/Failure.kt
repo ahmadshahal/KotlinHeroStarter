@@ -12,6 +12,11 @@ sealed class Failure {
     data class InternalServerError(val statusCode: Int, val message: String) : Failure()
     data class RedirectError(val statusCode: Int, val message: String) : Failure()
 
+    // Biometrics Failures
+    data object BiometricsUnavailable : Failure()
+    data object BiometricsAuthenticationFailed : Failure()
+    data object BiometricsNotInitialized : Failure()
+
     // Unknown or generic failures
     data class UnknownFailure(val message: String) : Failure()
 
@@ -27,6 +32,9 @@ sealed class Failure {
             is ClientError -> message
             is InternalServerError -> message
             is RedirectError -> "Redirection error: $message (Code: $statusCode)"
+            is BiometricsUnavailable -> "Biometrics unavailable: Running device may not support them or you haven't setup any."
+            is BiometricsAuthenticationFailed -> "Biometrics authentication failure."
+            is BiometricsNotInitialized -> "Biometrics not initialized, try setting up your biometrics before using them."
             is UnknownFailure -> "An unknown error occurred: $message"
         }
     }

@@ -47,14 +47,14 @@ class RegisterScreen : Screen, ScreenTransition by SlideTransition() {
 
         val state by viewModel.state.collectAsStateWithLifecycle()
 
-        if (state.registerFetchState.isLoading) {
+        if (state.registerResultState.isLoading) {
             LoadingDialog()
         }
 
-        if (state.registerFetchState.isError) {
+        if (state.registerResultState.isError) {
             ErrorDialog(
                 onDismissRequest = viewModel::resetFetchState,
-                subtitle = state.registerFetchState.failureOrNull?.getHumanReadableMessage() ?: ""
+                subtitle = state.registerResultState.failureOrNull?.getHumanReadableMessage() ?: ""
             )
         }
 

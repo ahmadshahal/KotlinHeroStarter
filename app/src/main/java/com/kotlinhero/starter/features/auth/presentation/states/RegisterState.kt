@@ -1,10 +1,10 @@
 package com.kotlinhero.starter.features.auth.presentation.states
 
-import com.kotlinhero.starter.core.foundation.utils.states.FetchState
+import com.kotlinhero.starter.core.foundation.utils.states.ResultState
 import com.kotlinhero.starter.core.foundation.utils.states.ValidationState
 
 data class RegisterState(
-    val registerFetchState: FetchState<Unit> = FetchState.Initial(),
+    val registerResultState: ResultState<Unit> = ResultState.Initial(),
     val email: String = "",
     val fullName: String = "",
     val password: String = "",
