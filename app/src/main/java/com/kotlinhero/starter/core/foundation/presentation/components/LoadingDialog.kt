@@ -4,9 +4,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.style.TextAlign
+import com.kotlinhero.starter.app.presentation.theme.starterColors
+import com.kotlinhero.starter.app.presentation.theme.starterTypography
 import com.kotlinhero.starter.core.foundation.presentation.components.pulse.PulsingLoadingIndicator
-import com.kotlinhero.starter.ui.theme.starterColors
-import com.kotlinhero.starter.ui.theme.starterTypography
 
 @Composable
 fun LoadingDialog(

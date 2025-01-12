@@ -101,7 +101,7 @@ class LoginViewModel(
     fun onPasswordChange(password: String) =
         mutableState.update { it.copy(password = password) }
 
-    fun resetFetchState() = mutableState.update {
+    fun resetLoginResultState() = mutableState.update {
         it.copy(loginResultState = ResultState.Initial())
     }
 

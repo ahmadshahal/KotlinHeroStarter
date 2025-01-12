@@ -19,8 +19,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -36,6 +34,9 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.kotlinhero.starter.R
+import com.kotlinhero.starter.app.presentation.screens.MainScreen
+import com.kotlinhero.starter.app.presentation.theme.starterColors
+import com.kotlinhero.starter.app.presentation.theme.starterTypography
 import com.kotlinhero.starter.core.foundation.presentation.components.ErrorDialog
 import com.kotlinhero.starter.core.foundation.presentation.components.LoadingDialog
 import com.kotlinhero.starter.core.foundation.presentation.reusables.buttons.NormalButton
@@ -44,8 +45,6 @@ import com.kotlinhero.starter.core.foundation.presentation.reusables.textfields.
 import com.kotlinhero.starter.core.foundation.presentation.reusables.topbar.DefaultTopBar
 import com.kotlinhero.starter.core.foundation.utils.getActivity
 import com.kotlinhero.starter.features.auth.presentation.viewmodels.LoginViewModel
-import com.kotlinhero.starter.ui.theme.starterColors
-import com.kotlinhero.starter.ui.theme.starterTypography
 import org.koin.androidx.compose.koinViewModel
 
 class LoginScreen : Screen {
@@ -57,7 +56,6 @@ class LoginScreen : Screen {
         val navigator = LocalNavigator.currentOrThrow
 
         val state by viewModel.state.collectAsStateWithLifecycle()
-        val snackbarHostState = remember { SnackbarHostState() }
 
         val context = LocalContext.current
         val activity = context.getActivity() as? AppCompatActivity
@@ -69,8 +67,17 @@ class LoginScreen : Screen {
                     navigator.push(BiometricLoginSetupScreen())
                 }
                 state.biometricResultState.isSuccess -> {
-                    snackbarHostState.showSnackbar("Biometric Login Succeeded")
+                    navigator.push(MainScreen())
                     viewModel.resetBiometricLoginResultState()
+                }
+            }
+        }
+
+        LaunchedEffect(state.loginResultState) {
+            when {
+                state.loginResultState.isSuccess -> {
+                    viewModel.resetLoginResultState()
+                    navigator.replace(MainScreen())
                 }
             }
         }
@@ -81,14 +88,13 @@ class LoginScreen : Screen {
 
         if (state.loginResultState.isError) {
             ErrorDialog(
-                onDismissRequest = viewModel::resetFetchState,
+                onDismissRequest = viewModel::resetLoginResultState,
                 subtitle = state.loginResultState.failureOrNull?.getHumanReadableMessage() ?: ""
             )
         }
 
         Scaffold(
             topBar = { DefaultTopBar(showBackButton = false) },
-            snackbarHost = { SnackbarHost(snackbarHostState) },
             containerColor = MaterialTheme.starterColors.background,
         ) { innerPadding ->
             Column(

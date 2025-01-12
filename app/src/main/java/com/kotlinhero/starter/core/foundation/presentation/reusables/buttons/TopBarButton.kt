@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.kotlinhero.starter.ui.theme.starterColors
+import com.kotlinhero.starter.app.presentation.theme.starterColors
 
 @Composable
 fun TopBarButton(

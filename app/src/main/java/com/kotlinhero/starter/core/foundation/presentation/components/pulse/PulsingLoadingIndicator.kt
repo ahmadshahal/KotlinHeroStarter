@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
-import com.kotlinhero.starter.ui.theme.starterColors
+import com.kotlinhero.starter.app.presentation.theme.starterColors
 
 @Composable
 fun PulsingLoadingIndicator(color: Color = MaterialTheme.starterColors.primary) {

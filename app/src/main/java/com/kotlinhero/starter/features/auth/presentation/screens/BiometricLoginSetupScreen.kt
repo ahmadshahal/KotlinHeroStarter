@@ -30,6 +30,8 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cafe.adriel.voyager.transitions.ScreenTransition
 import com.kotlinhero.starter.R
+import com.kotlinhero.starter.app.presentation.theme.starterColors
+import com.kotlinhero.starter.app.presentation.theme.starterTypography
 import com.kotlinhero.starter.core.foundation.presentation.components.ErrorDialog
 import com.kotlinhero.starter.core.foundation.presentation.components.SetupBiometricsLoadingDialog
 import com.kotlinhero.starter.core.foundation.presentation.reusables.buttons.NormalButton
@@ -38,8 +40,6 @@ import com.kotlinhero.starter.core.foundation.presentation.reusables.topbar.Defa
 import com.kotlinhero.starter.core.foundation.utils.getActivity
 import com.kotlinhero.starter.core.foundation.utils.voyager.transitions.SlideTransition
 import com.kotlinhero.starter.features.auth.presentation.viewmodels.BiometricLoginSetupViewModel
-import com.kotlinhero.starter.ui.theme.starterColors
-import com.kotlinhero.starter.ui.theme.starterTypography
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalVoyagerApi::class)

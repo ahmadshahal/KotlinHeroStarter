@@ -12,8 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.kotlinhero.starter.ui.theme.starterColors
-import com.kotlinhero.starter.ui.theme.starterTypography
+import com.kotlinhero.starter.app.presentation.theme.starterColors
+import com.kotlinhero.starter.app.presentation.theme.starterTypography
 
 @Composable
 fun NormalOutlinedButton(

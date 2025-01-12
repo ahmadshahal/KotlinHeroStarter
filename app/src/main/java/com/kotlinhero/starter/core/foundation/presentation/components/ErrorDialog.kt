@@ -17,11 +17,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import com.kotlinhero.starter.R
+import com.kotlinhero.starter.app.presentation.theme.starterColors
+import com.kotlinhero.starter.app.presentation.theme.starterTypography
 import com.kotlinhero.starter.core.foundation.presentation.components.pulse.PulsingCircle
 import com.kotlinhero.starter.core.foundation.presentation.reusables.buttons.NormalButton
 import com.kotlinhero.starter.core.foundation.presentation.reusables.buttons.NormalOutlinedButton
-import com.kotlinhero.starter.ui.theme.starterColors
-import com.kotlinhero.starter.ui.theme.starterTypography
 
 @Composable
 fun TryAgainErrorDialog(

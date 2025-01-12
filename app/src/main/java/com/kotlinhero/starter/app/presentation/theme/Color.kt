@@ -1,4 +1,4 @@
-package com.kotlinhero.starter.ui.theme
+package com.kotlinhero.starter.app.presentation.theme
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -25,8 +25,8 @@ data class StarterColors(
     val background: Color = Color(0xFFF8F8F8),
     val red: Color = Color(0xFFBA3232),
     val error: Color = Color(0xFFF16262),
-    val primary: Color = Color(0xFF40B8E2),
-    val secondary: Color = Color(0xFFFF8300),
+    val primary: Color = Color(0xFF366DE2),
+    val secondary: Color = Color(0xFF7BD3D4),
     val primary300: Color = Color(0xFFA0DBF1),
     val greyIndicator: Color = Color(0xFFE0EAF9),
     val white: Color = Color(0xFFFFFFFF),
@@ -47,25 +47,6 @@ data class StarterColors(
     val textGrey: Color = Color(0xFF8F8F8F),
     val success: Color = Color(0xff00b31e),
     val warning: Color = Color(0xfffdb02b),
-    val primary100: Color = Color(0xffdff3fa),
-    val primary200: Color = Color(0xffbfe7f5),
-    val primary400: Color = Color(0xff80d0ec),
-    val primary500: Color = Color(0xff60c4e7),
-    val primary600: Color = Color(0xff21abdb),
-    val primary700: Color = Color(0xff1c91ba),
-    val primary800: Color = Color(0xff177899),
-    val primary900: Color = Color(0xff125e79),
-    val primary1000: Color = Color(0xff0d4458),
-    val secondary100: Color = Color(0xfffff3e5),
-    val secondary200: Color = Color(0xffffe6cc),
-    val secondary300: Color = Color(0xffffcd99),
-    val secondary400: Color = Color(0xffffb566),
-    val secondary500: Color = Color(0xffff9c33),
-    val secondary600: Color = Color(0xffcc6900),
-    val secondary700: Color = Color(0xff994f00),
-    val secondary800: Color = Color(0xff663400),
-    val secondary900: Color = Color(0xff4c2700),
-    val secondary1000: Color = Color(0xff331a00),
     val success100: Color = Color(0xFF00B31E),
     val success200: Color = Color(0xff22ff47),
     val success300: Color = Color(0xff008015),
@@ -75,7 +56,6 @@ data class StarterColors(
     val error100: Color = Color(0x1af16262),
     val error200: Color = Color(0xfff48181),
     val error300: Color = Color(0xffc94f4f),
-    val purple: Color = Color(0xffDF3FAF)
 )
 
 private val LocalStarterColors = staticCompositionLocalOf { StarterColors() }

@@ -25,6 +25,8 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cafe.adriel.voyager.transitions.ScreenTransition
 import com.kotlinhero.starter.R
+import com.kotlinhero.starter.app.presentation.theme.starterColors
+import com.kotlinhero.starter.app.presentation.theme.starterTypography
 import com.kotlinhero.starter.core.foundation.presentation.components.ErrorDialog
 import com.kotlinhero.starter.core.foundation.presentation.components.LoadingDialog
 import com.kotlinhero.starter.core.foundation.presentation.reusables.buttons.NormalButton
@@ -32,8 +34,6 @@ import com.kotlinhero.starter.core.foundation.presentation.reusables.textfields.
 import com.kotlinhero.starter.core.foundation.presentation.reusables.topbar.DefaultTopBar
 import com.kotlinhero.starter.core.foundation.utils.voyager.transitions.SlideTransition
 import com.kotlinhero.starter.features.auth.presentation.viewmodels.RegisterViewModel
-import com.kotlinhero.starter.ui.theme.starterColors
-import com.kotlinhero.starter.ui.theme.starterTypography
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalVoyagerApi::class)
@@ -130,7 +130,7 @@ class RegisterScreen : Screen, ScreenTransition by SlideTransition() {
                     },
                     visualTransformation = PasswordVisualTransformation(),
                 )
-                Spacer(modifier = Modifier.height(48.dp))
+                Spacer(modifier = Modifier.height(32.dp))
                 NormalButton(
                     text = "Register",
                     onClick = viewModel::register,

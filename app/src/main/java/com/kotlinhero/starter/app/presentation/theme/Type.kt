@@ -1,4 +1,4 @@
-package com.kotlinhero.starter.ui.theme
+package com.kotlinhero.starter.app.presentation.theme
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable

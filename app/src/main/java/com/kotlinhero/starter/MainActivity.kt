@@ -8,8 +8,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.FadeTransition
+import com.kotlinhero.starter.app.presentation.theme.StarterTheme
 import com.kotlinhero.starter.features.auth.presentation.screens.LoginScreen
-import com.kotlinhero.starter.ui.theme.StarterTheme
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
