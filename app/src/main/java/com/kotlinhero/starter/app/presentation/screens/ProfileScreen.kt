@@ -15,21 +15,71 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import com.kotlinhero.starter.R
+import com.kotlinhero.starter.app.presentation.components.ProfileHeader
 import com.kotlinhero.starter.app.presentation.components.ProfileItem
 import com.kotlinhero.starter.app.presentation.theme.starterColors
 import com.kotlinhero.starter.app.presentation.theme.starterTypography
+import com.kotlinhero.starter.app.presentation.viewmodels.ProfileViewModel
+import com.kotlinhero.starter.core.foundation.presentation.components.ErrorDialog
+import com.kotlinhero.starter.core.foundation.presentation.components.LoadingDialog
+import com.kotlinhero.starter.core.foundation.presentation.components.LogoutDialog
 import com.kotlinhero.starter.core.foundation.presentation.reusables.buttons.NormalOutlinedButton
+import com.kotlinhero.starter.features.auth.presentation.screens.LoginScreen
+import org.koin.androidx.compose.koinViewModel
 
 class ProfileScreen : Screen {
 
     @Composable
     override fun Content() {
+        val navigator = LocalNavigator.currentOrThrow.parent ?: throw IllegalStateException()
+
+        val viewModel = koinViewModel<ProfileViewModel>()
+        val state by viewModel.state.collectAsStateWithLifecycle()
+
+        var isLogoutDialogVisible by remember { mutableStateOf(false) }
+        if(isLogoutDialogVisible) {
+            LogoutDialog(
+                onLogoutClicked = {
+                    isLogoutDialogVisible = false
+                    viewModel.logout()
+                },
+                onDismissRequest = { isLogoutDialogVisible = false }
+            )
+        }
+
+        LaunchedEffect(state.logoutResultState) {
+            when {
+                state.logoutResultState.isSuccess -> {
+                    viewModel.resetLogoutResultState()
+                    navigator.replace(LoginScreen())
+                }
+            }
+        }
+
+        if (state.logoutResultState.isLoading) {
+            LoadingDialog()
+        }
+
+        if (state.logoutResultState.isError) {
+            ErrorDialog(
+                onDismissRequest = viewModel::resetLogoutResultState,
+                subtitle = state.logoutResultState.failureOrNull?.getHumanReadableMessage() ?: ""
+            )
+        }
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -38,6 +88,11 @@ class ProfileScreen : Screen {
                 .padding(paddingValues = PaddingValues(bottom = 140.dp, top = 48.dp))
                 .padding(horizontal = 16.dp)
         ) {
+            ProfileHeader(
+                fullName = state.user.fullName,
+                email = state.user.email
+            )
+            Spacer(modifier = Modifier.height(24.dp))
             Text(
                 text = "GENERAL SETTINGS",
                 style = MaterialTheme.starterTypography.body12SemiBold.copy(
@@ -92,7 +147,7 @@ class ProfileScreen : Screen {
             ProfileItem(
                 icon = {
                     Icon(
-                        painter = painterResource(id = R.drawable.ic_lock),
+                        painter = painterResource(id = R.drawable.ic_lock_outline),
                         contentDescription = null
                     )
                 },
@@ -137,7 +192,7 @@ class ProfileScreen : Screen {
                     )
                 },
                 title = "Privacy Policy",
-                onClick = {}
+                onClick = { }
             )
             Spacer(modifier = Modifier.height(8.dp))
             ProfileItem(
@@ -148,7 +203,7 @@ class ProfileScreen : Screen {
                     )
                 },
                 title = "Contact Us",
-                onClick = {}
+                onClick = { }
             )
             Spacer(modifier = Modifier.height(24.dp))
             Text(
@@ -161,10 +216,10 @@ class ProfileScreen : Screen {
             NormalOutlinedButton(
                 modifier = Modifier.fillMaxWidth(),
                 text = "Logout",
-                onClick = {},
+                onClick = { isLogoutDialogVisible = true },
+                borderColor = MaterialTheme.starterColors.error,
                 colors = ButtonDefaults.outlinedButtonColors(
                     contentColor = MaterialTheme.starterColors.error,
-                    containerColor = Color.Transparent,
                 )
             )
         }

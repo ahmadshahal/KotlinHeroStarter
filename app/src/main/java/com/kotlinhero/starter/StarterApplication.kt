@@ -1,7 +1,9 @@
 package com.kotlinhero.starter
 
 import android.app.Application
+import com.kotlinhero.starter.app.AppModule
 import com.kotlinhero.starter.core.CoreModule
+import com.kotlinhero.starter.core.auth.di.UserDataStoreModule
 import com.kotlinhero.starter.core.foundation.di.EncryptedSharedPreferencesModule
 import com.kotlinhero.starter.core.foundation.di.KtorModule
 import com.kotlinhero.starter.core.foundation.di.PreferencesDataStoreModule
@@ -33,6 +35,8 @@ class StarterApplication : Application(), KoinStartup {
             EncryptedSharedPreferencesModule().module,
             PreferencesDataStoreModule().module,
             CoreModule().module,
+            AppModule().module,
+            UserDataStoreModule().module,
         )
     }
 }

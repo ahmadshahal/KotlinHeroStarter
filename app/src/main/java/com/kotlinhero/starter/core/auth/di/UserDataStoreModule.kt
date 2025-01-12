@@ -7,15 +7,17 @@ import androidx.datastore.dataStoreFile
 import com.kotlinhero.starter.core.auth.data.local.models.UserPreferences
 import com.kotlinhero.starter.core.auth.data.local.models.serializers.UserPreferencesSerializer
 import org.koin.core.annotation.Module
+import org.koin.core.annotation.Named
 import org.koin.core.annotation.Single
 
 private const val USER_SETTINGS_NAME = "userSettings"
 
 @Module
-class UserPreferencesDataStoreModule {
+class UserDataStoreModule {
 
     @Single
-    fun provideUserPreferencesDataStore(
+    @Named("UserDataStore")
+    fun provideUserDataStore(
         applicationContext: Context
     ): DataStore<UserPreferences> {
         return DataStoreFactory.create(

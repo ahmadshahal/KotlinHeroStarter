@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.serialization.json.Json
 import org.koin.core.annotation.Factory
+import org.koin.core.annotation.Named
 
 private const val ACCESS_TOKEN_KEY = "accessToken"
 private const val REFRESH_TOKEN_KEY = "refreshToken"
@@ -52,7 +53,7 @@ interface AuthLocalStorage {
 internal class AuthLocalStorageImpl(
     private val encryptedKeyValueStore: EncryptedKeyValueStore,
     private val keyValueStore: KeyValueStore,
-    private val userDataStore: DataStore<UserPreferences>,
+    @Named("UserDataStore") private val userDataStore: DataStore<UserPreferences>,
 ) : AuthLocalStorage {
 
     override val userFlow: Flow<UserPreferences>

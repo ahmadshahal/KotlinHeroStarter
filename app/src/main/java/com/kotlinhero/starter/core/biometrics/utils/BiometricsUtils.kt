@@ -74,13 +74,10 @@ object BiometricPromptUtils {
     fun createPromptInfo(): BiometricPrompt.PromptInfo =
         BiometricPrompt.PromptInfo.Builder().apply {
             // Title displayed at the top of the biometric dialog.
-            setTitle("Starter App Authentication")
+            setTitle("Kotlin Hero Starter App Authentication")
 
             // Subtitle displayed below the title in smaller font.
             setSubtitle("Please login to get access")
-
-            // Description providing additional context to the user.
-            setDescription("Starter App is using Android biometric authentication.")
 
             // Determines if a confirmation step is required after successful authentication.
             setConfirmationRequired(false)

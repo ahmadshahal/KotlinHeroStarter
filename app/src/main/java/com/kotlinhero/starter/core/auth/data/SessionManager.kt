@@ -4,11 +4,13 @@ import com.kotlinhero.starter.core.auth.data.local.datasources.AuthLocalStorage
 import com.kotlinhero.starter.core.auth.data.local.models.UserPreferences
 import com.kotlinhero.starter.core.auth.data.mappers.toLoginCredentialsDto
 import com.kotlinhero.starter.core.auth.data.mappers.toRegisterCredentialsDto
+import com.kotlinhero.starter.core.auth.data.mappers.toUser
 import com.kotlinhero.starter.core.auth.data.mappers.toUserPreferences
 import com.kotlinhero.starter.core.auth.data.remote.api.AuthApi
 import com.kotlinhero.starter.core.auth.domain.entities.AuthorizationTokens
 import com.kotlinhero.starter.core.auth.domain.entities.LoginCredentials
 import com.kotlinhero.starter.core.auth.domain.entities.RegisterCredentials
+import com.kotlinhero.starter.core.auth.domain.entities.User
 import com.kotlinhero.starter.core.biometrics.domain.entities.CipherText
 import com.kotlinhero.starter.core.foundation.data.repositories.BaseRepository
 import com.kotlinhero.starter.core.foundation.utils.Either
@@ -21,6 +23,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -32,7 +35,7 @@ interface SessionManager {
 
     val refreshToken: StateFlow<String?>
 
-    val userFlow: StateFlow<UserPreferences?>
+    val userFlow: StateFlow<User>
 
     val isLoggedInFlow: StateFlow<Boolean>
 
@@ -67,12 +70,14 @@ internal class SessionManagerImpl(
     private val _refreshToken = MutableStateFlow<String?>(null)
     override val refreshToken: StateFlow<String?> get() = _refreshToken
 
-    private val _userFlow = authLocalStorage.userFlow.stateIn(
-        scope = CoroutineScope(Dispatchers.Default),
-        started = SharingStarted.Lazily,
-        initialValue = null
-    )
-    override val userFlow: StateFlow<UserPreferences?> get() = _userFlow
+    override val userFlow: StateFlow<User> = authLocalStorage
+        .userFlow
+        .map { it.toUser() }
+        .stateIn(
+            scope = CoroutineScope(Dispatchers.Default),
+            started = SharingStarted.Lazily,
+            initialValue = User()
+        )
 
     private val _isLoggedInFlow = MutableStateFlow(false)
     override val isLoggedInFlow: StateFlow<Boolean> get() = _isLoggedInFlow
@@ -157,7 +162,7 @@ internal class SessionManagerImpl(
 
     override suspend fun logout(permanently: Boolean): Either<Failure, Unit> {
         return safeApiCall {
-            authApi.logout()
+            // authApi.logout()
             clearSession(permanently = permanently)
         }
     }
@@ -185,7 +190,7 @@ internal class SessionManagerImpl(
     private suspend fun clearSession(permanently: Boolean) {
         _accessToken.value = null
         _refreshToken.value = null
-        if(permanently) authLocalStorage.removeSecretToken()
+        if (permanently) authLocalStorage.removeSecretToken()
         authLocalStorage.removeAccessToken()
         authLocalStorage.removeRefreshToken()
         authLocalStorage.removeUser()

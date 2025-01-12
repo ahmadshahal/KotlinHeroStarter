@@ -6,6 +6,7 @@ import com.kotlinhero.starter.core.auth.data.remote.models.RegisterCredentialsDt
 import com.kotlinhero.starter.core.auth.data.remote.models.UserDto
 import com.kotlinhero.starter.core.auth.domain.entities.LoginCredentials
 import com.kotlinhero.starter.core.auth.domain.entities.RegisterCredentials
+import com.kotlinhero.starter.core.auth.domain.entities.User
 
 fun LoginCredentials.toLoginCredentialsDto() = LoginCredentialsDto(
     email = email,
@@ -19,6 +20,11 @@ fun RegisterCredentials.toRegisterCredentialsDto() = RegisterCredentialsDto(
 )
 
 fun UserDto.toUserPreferences() = UserPreferences(
+    email = email,
+    fullName = fullName,
+)
+
+fun UserPreferences.toUser() = User(
     email = email,
     fullName = fullName,
 )
