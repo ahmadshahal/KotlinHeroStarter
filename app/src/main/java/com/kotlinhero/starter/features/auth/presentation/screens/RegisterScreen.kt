@@ -13,6 +13,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -25,6 +26,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cafe.adriel.voyager.transitions.ScreenTransition
 import com.kotlinhero.starter.R
+import com.kotlinhero.starter.app.presentation.screens.MainScreen
 import com.kotlinhero.starter.app.presentation.theme.starterColors
 import com.kotlinhero.starter.app.presentation.theme.starterTypography
 import com.kotlinhero.starter.core.foundation.presentation.components.ErrorDialog
@@ -53,9 +55,19 @@ class RegisterScreen : Screen, ScreenTransition by SlideTransition() {
 
         if (state.registerResultState.isError) {
             ErrorDialog(
-                onDismissRequest = viewModel::resetFetchState,
+                onDismissRequest = viewModel::resetRegisterResultState,
                 subtitle = state.registerResultState.failureOrNull?.getHumanReadableMessage() ?: ""
             )
+        }
+
+
+        LaunchedEffect(state.registerResultState) {
+            when {
+                state.registerResultState.isSuccess -> {
+                    viewModel.resetRegisterResultState()
+                    navigator.replace(MainScreen())
+                }
+            }
         }
 
         Scaffold(

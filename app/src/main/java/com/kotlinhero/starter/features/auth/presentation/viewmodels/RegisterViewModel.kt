@@ -47,7 +47,7 @@ class RegisterViewModel(
         }
     }
 
-    fun resetFetchState() = mutableState.update {
+    fun resetRegisterResultState() = mutableState.update {
         it.copy(registerResultState = ResultState.Initial())
     }
 

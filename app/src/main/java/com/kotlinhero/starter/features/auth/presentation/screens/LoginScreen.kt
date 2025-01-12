@@ -67,7 +67,7 @@ class LoginScreen : Screen {
                     navigator.push(BiometricLoginSetupScreen())
                 }
                 state.biometricResultState.isSuccess -> {
-                    navigator.push(MainScreen())
+                    navigator.replace(MainScreen())
                     viewModel.resetBiometricLoginResultState()
                 }
             }
