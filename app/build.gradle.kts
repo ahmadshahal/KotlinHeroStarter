@@ -22,6 +22,9 @@ android {
             useSupportLibrary = true
         }
 
+        // Replace with your app's name to use it as a default,
+        signingConfig = signingConfigs.getByName("debug")
+
         // Specify the same languages using the resourceConfigurations property
         // in your app's module-level build.gradle file
         resourceConfigurations += listOf("en", "ar")
@@ -44,7 +47,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
