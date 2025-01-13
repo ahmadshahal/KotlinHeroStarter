@@ -20,11 +20,11 @@ private const val ENCRYPTED_TOKEN_DATA_STORE_KEY = "encrypted_token_data_store_k
 interface AuthLocalStorage {
     val userFlow: Flow<UserPreferences>
 
-    suspend fun getAccessToken(): String?
+    fun getAccessToken(): String?
 
     suspend fun getUser(): UserPreferences?
 
-    suspend fun getRefreshToken(): String?
+    fun getRefreshToken(): String?
 
     suspend fun setAccessToken(token: String)
 
@@ -65,14 +65,12 @@ internal class AuthLocalStorageImpl(
         return Json.decodeFromString(CipherText.serializer(), json)
     }
 
-    override suspend fun getAccessToken(): String? =
-        encryptedKeyValueStore.getString(ACCESS_TOKEN_KEY)
+    override fun getAccessToken(): String? = encryptedKeyValueStore.getString(ACCESS_TOKEN_KEY)
 
     override suspend fun getUser(): UserPreferences? =
         userDataStore.data.firstOrNull()
 
-    override suspend fun getRefreshToken(): String? =
-        encryptedKeyValueStore.getString(REFRESH_TOKEN_KEY)
+    override fun getRefreshToken(): String? = encryptedKeyValueStore.getString(REFRESH_TOKEN_KEY)
 
     override suspend fun setAccessToken(token: String) =
         encryptedKeyValueStore.putString(ACCESS_TOKEN_KEY, token)

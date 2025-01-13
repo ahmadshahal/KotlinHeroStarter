@@ -25,7 +25,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.core.annotation.Single
 
@@ -90,13 +89,10 @@ internal class SessionManagerImpl(
     override val forceLogoutFlow: SharedFlow<Unit> get() = _forceLogoutFlow
 
     init {
-        // TODO: Consider another alternatives..
-        CoroutineScope(Dispatchers.Default).launch {
-            loadTokens()
-        }
+        loadTokens()
     }
 
-    private suspend fun loadTokens() {
+    private fun loadTokens() {
         _accessToken.value = authLocalStorage.getAccessToken()
         _refreshToken.value = authLocalStorage.getRefreshToken()
         _isLoggedInFlow.value = !refreshToken.value.isNullOrEmpty()
@@ -135,9 +131,9 @@ internal class SessionManagerImpl(
     }
 
     override suspend fun login(refreshToken: String) {
-        // This type does not save the user locally and should be fetched from the server.
+        // This login type does not save the user locally and should be fetched from the server.
         _refreshToken.value = refreshToken
-        saveRefreshToken(refreshToken)
+        // saveRefreshToken(refreshToken)
     }
 
     override suspend fun getSecretToken(): CipherText? =

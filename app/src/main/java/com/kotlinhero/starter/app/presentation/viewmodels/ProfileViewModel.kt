@@ -2,10 +2,10 @@ package com.kotlinhero.starter.app.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kotlinhero.starter.app.presentation.states.ProfileState
 import com.kotlinhero.starter.core.auth.domain.usecases.GetUserFlowUseCase
 import com.kotlinhero.starter.core.auth.domain.usecases.LogoutUseCase
 import com.kotlinhero.starter.core.foundation.utils.states.ResultState
-import com.kotlinhero.starter.features.auth.presentation.states.ProfileState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn

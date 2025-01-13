@@ -7,7 +7,7 @@ import org.koin.core.annotation.Factory
 
 interface EncryptedKeyValueStore {
 
-    suspend fun getString(key: String): String?
+    fun getString(key: String): String?
 
     suspend fun putString(key: String, value: String?)
 
@@ -19,15 +19,15 @@ internal class EncryptedKeyValueStoreImpl(
     private val sharedPreferences: SharedPreferences
 ) : EncryptedKeyValueStore {
 
-    override suspend fun getString(key: String): String? = withContext(Dispatchers.IO) {
-        sharedPreferences.getString(key, null)
+    override fun getString(key: String): String? {
+        return sharedPreferences.getString(key, null)
     }
 
     override suspend fun putString(key: String, value: String?) = withContext(Dispatchers.IO) {
         sharedPreferences.edit().putString(key, value).apply()
     }
 
-    override suspend fun remove(key: String) = withContext(Dispatchers.IO.limitedParallelism(1)) {
+    override suspend fun remove(key: String) = withContext(Dispatchers.IO) {
         sharedPreferences.edit().remove(key).apply()
     }
 }

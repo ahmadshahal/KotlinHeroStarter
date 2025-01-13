@@ -1,4 +1,4 @@
-package com.kotlinhero.starter.features.auth.presentation.states
+package com.kotlinhero.starter.app.presentation.states
 
 import com.kotlinhero.starter.core.auth.domain.entities.User
 import com.kotlinhero.starter.core.foundation.utils.states.ResultState
