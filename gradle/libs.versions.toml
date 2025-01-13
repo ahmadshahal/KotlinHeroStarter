@@ -21,7 +21,14 @@ kotlinxSerializationJson = "1.7.3"
 androidx-security-crypto = "1.1.0-alpha06"
 datastore = "1.1.1"
 okhttp = "5.0.0-alpha.8"
-splashScreen = "1.0.0"
+splashScreen = "1.0.1"
+mockito = "5.2.0"
+mockito-kotlin = "2.2.0"
+testing-androidx-junit = "1.2.1"
+coroutine-testing = "1.8.1"
+androidx-testing-core = "2.2.0"
+androidx-test-rules = "1.6.1"
+androidx-test-runner = "1.6.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -73,6 +80,15 @@ androidx-datastore-core = { module = "androidx.datastore:datastore-core", versio
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "splashScreen" }
+
+testing-mockito = { module = "org.mockito:mockito-core", version.ref = "mockito" }
+testing-mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockito" }
+testing-mockito-kotlin = { module = "com.nhaarman.mockitokotlin2:mockito-kotlin", version.ref = "mockito-kotlin" }
+testing-androidx-core = { module = "androidx.arch.core:core-testing", version.ref = "androidx-testing-core" }
+testing-androidx-junit = { module = "androidx.test.ext:junit-ktx", version.ref = "testing-androidx-junit" }
+testing-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutine-testing" }
+androidx-test-rules = { module = "androidx.test:rules", version.ref = "androidx-test-rules" }
+androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidx-test-runner" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -99,6 +99,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -106,6 +107,15 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    testImplementation(libs.testing.mockito)
+    testImplementation(libs.testing.mockito.inline)
+    testImplementation(libs.testing.mockito.kotlin)
+    testImplementation(libs.testing.androidx.core)
+    testImplementation(libs.testing.androidx.junit)
+    testImplementation(libs.testing.coroutines)
+    testImplementation(libs.androidx.test.rules)
+    testImplementation(libs.androidx.test.runner)
 
     implementation(project.dependencies.platform(libs.koin.bom))
     implementation(libs.koin.core)
@@ -120,6 +130,7 @@ dependencies {
     implementation(libs.voyager.navigator)
     implementation(libs.voyager.transitions)
     implementation(libs.voyager.koin)
+
 
     implementation(libs.ktor.client.core)
     implementation(libs.ktor.client.okhttp)
