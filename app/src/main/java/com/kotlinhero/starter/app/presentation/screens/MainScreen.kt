@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.CurrentScreen
@@ -48,7 +49,7 @@ class MainScreen : Screen {
                         },
                         label = {
                             Text(
-                                text = "Home",
+                                text = stringResource(R.string.home),
                                 style = MaterialTheme.starterTypography.body14Medium
                             )
                         }
@@ -67,7 +68,7 @@ class MainScreen : Screen {
                         },
                         label = {
                             Text(
-                                text = "Chat",
+                                text = stringResource(R.string.chat),
                                 style = MaterialTheme.starterTypography.body14Medium
                             )
                         }
@@ -87,7 +88,7 @@ class MainScreen : Screen {
                         },
                         label = {
                             Text(
-                                text = "Profile",
+                                text = stringResource(R.string.profile),
                                 style = MaterialTheme.starterTypography.body14Medium
                             )
                         }

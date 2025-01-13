@@ -21,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -87,7 +88,7 @@ class BiometricLoginSetupScreen : Screen, ScreenTransition by SlideTransition() 
             ) {
                 Spacer(modifier = Modifier.height(45.dp))
                 Text(
-                    text = "Setup your biometric login",
+                    text = stringResource(R.string.setup_your_biometric_login),
                     style = MaterialTheme.starterTypography.displayThree.copy(
                         color = MaterialTheme.starterColors.baseBlack
                     )
@@ -96,7 +97,7 @@ class BiometricLoginSetupScreen : Screen, ScreenTransition by SlideTransition() 
                 NormalTextField(
                     value = state.email,
                     onValueChange = viewModel::onEmailChange,
-                    hint = "Email",
+                    hint = stringResource(R.string.email),
                     prefix = { isFocused ->
                         val color =
                             if (isFocused) MaterialTheme.starterColors.neutrals500 else MaterialTheme.starterColors.neutrals200
@@ -114,7 +115,7 @@ class BiometricLoginSetupScreen : Screen, ScreenTransition by SlideTransition() 
                 NormalTextField(
                     value = state.password,
                     onValueChange = viewModel::onPasswordChange,
-                    hint = "Password",
+                    hint = stringResource(R.string.password),
                     prefix = { isFocused ->
                         val color =
                             if (isFocused) MaterialTheme.starterColors.neutrals500 else MaterialTheme.starterColors.neutrals200
@@ -129,7 +130,7 @@ class BiometricLoginSetupScreen : Screen, ScreenTransition by SlideTransition() 
                 )
                 Spacer(modifier = Modifier.height(32.dp))
                 NormalButton(
-                    text = "Authorize",
+                    text = stringResource(R.string.authorize),
                     onClick = { viewModel.authorize(activity = activity) },
                     modifier = Modifier.fillMaxWidth()
                 )

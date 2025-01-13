@@ -124,7 +124,7 @@ class BiometricRepositoryImpl(
                     }
                 )
 
-                val promptInfo = BiometricPromptUtils.createPromptInfo()
+                val promptInfo = BiometricPromptUtils.createPromptInfo(activity)
                 biometricPrompt.authenticate(promptInfo, BiometricPrompt.CryptoObject(cipher))
             }
             Either.Right(resultCipher)

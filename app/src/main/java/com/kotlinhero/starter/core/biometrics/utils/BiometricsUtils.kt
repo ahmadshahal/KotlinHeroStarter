@@ -1,8 +1,10 @@
 package com.kotlinhero.starter.core.biometrics.utils
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
+import com.kotlinhero.starter.R
 import timber.log.Timber
 
 object BiometricPromptUtils {
@@ -71,18 +73,18 @@ object BiometricPromptUtils {
      *
      * @return A configured [BiometricPrompt.PromptInfo] instance.
      */
-    fun createPromptInfo(): BiometricPrompt.PromptInfo =
+    fun createPromptInfo(context: Context): BiometricPrompt.PromptInfo =
         BiometricPrompt.PromptInfo.Builder().apply {
             // Title displayed at the top of the biometric dialog.
-            setTitle("Kotlin Hero Starter App Authentication")
+            setTitle(context.getString(R.string.kotlin_hero_starter_app_authentication))
 
             // Subtitle displayed below the title in smaller font.
-            setSubtitle("Please login to get access")
+            setSubtitle(context.getString(R.string.please_login_to_get_access))
 
             // Determines if a confirmation step is required after successful authentication.
             setConfirmationRequired(false)
 
             // The text of the button displayed as an alternative to biometric authentication.
-            setNegativeButtonText("Use app password")
+            setNegativeButtonText(context.getString(R.string.use_app_password))
         }.build()
 }

@@ -21,6 +21,25 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        // Specify the same languages using the resourceConfigurations property
+        // in your app's module-level build.gradle file
+        resourceConfigurations += listOf("en", "ar")
+    }
+
+    androidResources {
+        // To enable automatic per-app language support, follow these steps:
+        // 1. To turn the feature on, use the generateLocaleConfig setting in the androidResources
+        //    {} block of the module-level build.gradle.kts file
+        //    (build.gradle file if you're using Groovy).
+        //    The feature is off by default.
+        // 2. Specify a default locale:
+        //    In the app module's res folder, create a new file called
+        //    resources.properties.
+        //    In the resources.properties file, set the default locale with
+        //    the unqualifiedResLocale label. To format the locale
+        //    names, see How to form locale names.
+        generateLocaleConfig = true
     }
 
     buildTypes {

@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -27,8 +28,8 @@ import com.kotlinhero.starter.core.foundation.presentation.reusables.buttons.Nor
 fun TryAgainErrorDialog(
     onClickTryAgain: () -> Unit,
     onClickBack: () -> Unit,
-    title: String = "Something went wrong",
-    subtitle: String = "Please try again..",
+    title: String = stringResource(R.string.something_went_wrong),
+    subtitle: String = stringResource(R.string.please_try_again),
     onDismissRequest: () -> Unit = {}
 ) {
     ErrorDialog(
@@ -64,7 +65,7 @@ fun TryAgainErrorDialog(
 @Composable
 fun ErrorDialog(
     onDismissRequest: () -> Unit,
-    title: String? = "Something went wrong",
+    title: String? = stringResource(R.string.something_went_wrong),
     subtitle: String? = null,
     buttons: (@Composable RowScope.() -> Unit)? = {
         NormalButton(

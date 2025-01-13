@@ -27,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -106,7 +107,7 @@ class LoginScreen : Screen {
             ) {
                 Spacer(modifier = Modifier.height(45.dp))
                 Text(
-                    text = "Login to your\naccount",
+                    text = stringResource(R.string.login_to_your_account),
                     style = MaterialTheme.starterTypography.displayThree.copy(
                         color = MaterialTheme.starterColors.baseBlack
                     )
@@ -115,7 +116,7 @@ class LoginScreen : Screen {
                 NormalTextField(
                     value = state.email,
                     onValueChange = viewModel::onEmailChange,
-                    hint = "Email",
+                    hint = stringResource(R.string.email),
                     prefix = { isFocused ->
                         val color =
                             if (isFocused) MaterialTheme.starterColors.neutrals500 else MaterialTheme.starterColors.neutrals200
@@ -133,7 +134,7 @@ class LoginScreen : Screen {
                 NormalTextField(
                     value = state.password,
                     onValueChange = viewModel::onPasswordChange,
-                    hint = "Password",
+                    hint = stringResource(R.string.password),
                     prefix = { isFocused ->
                         val color =
                             if (isFocused) MaterialTheme.starterColors.neutrals500 else MaterialTheme.starterColors.neutrals200
@@ -148,7 +149,7 @@ class LoginScreen : Screen {
                 )
                 Spacer(modifier = Modifier.height(32.dp))
                 NormalButton(
-                    text = "Login",
+                    text = stringResource(R.string.login),
                     onClick = viewModel::login,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -156,7 +157,7 @@ class LoginScreen : Screen {
                     Spacer(modifier = Modifier.height(16.dp))
                     NormalOutlinedButton(
                         modifier = Modifier.fillMaxWidth(),
-                        text = "Biometric Login",
+                        text = stringResource(R.string.biometric_login),
                         onClick = { viewModel.biometricLogin(activity) }
                     )
                 }
@@ -166,14 +167,14 @@ class LoginScreen : Screen {
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = "Don't have an account?",
+                        text = stringResource(R.string.don_t_have_an_account),
                         style = MaterialTheme.starterTypography.body12Regular.copy(
                             color = MaterialTheme.starterColors.neutrals500
                         )
                     )
                     Spacer(modifier = Modifier.width(2.dp))
                     Text(
-                        text = "Register",
+                        text = stringResource(R.string.register),
                         style = MaterialTheme.starterTypography.body12Regular.copy(
                             color = MaterialTheme.starterColors.primary
                         ),

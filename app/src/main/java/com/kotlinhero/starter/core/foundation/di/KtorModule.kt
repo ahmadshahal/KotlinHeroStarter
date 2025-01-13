@@ -2,6 +2,7 @@ package com.kotlinhero.starter.core.foundation.di
 
 import com.kotlinhero.starter.BuildConfig
 import com.kotlinhero.starter.core.auth.data.remote.interceptors.AuthInterceptor
+import com.kotlinhero.starter.core.foundation.data.remote.interceptors.LanguageInterceptor
 import com.kotlinhero.starter.core.foundation.domain.flavors.Flavor
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
@@ -48,6 +49,7 @@ class KtorModule {
 
                 config { followRedirects(true) }
                 addInterceptor(AuthInterceptor())
+                addInterceptor(LanguageInterceptor())
                 addInterceptor(loggingInterceptor)
             }
 

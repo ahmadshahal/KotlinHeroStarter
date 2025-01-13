@@ -22,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
@@ -38,6 +39,7 @@ import com.kotlinhero.starter.core.foundation.presentation.components.LoadingDia
 import com.kotlinhero.starter.core.foundation.presentation.components.LogoutDialog
 import com.kotlinhero.starter.core.foundation.presentation.reusables.buttons.NormalOutlinedButton
 import com.kotlinhero.starter.features.auth.presentation.screens.LoginScreen
+import com.kotlinhero.starter.features.settings.presentation.screens.LanguageScreen
 import org.koin.androidx.compose.koinViewModel
 
 class ProfileScreen : Screen {
@@ -94,7 +96,7 @@ class ProfileScreen : Screen {
             )
             Spacer(modifier = Modifier.height(24.dp))
             Text(
-                text = "GENERAL SETTINGS",
+                text = stringResource(R.string.general_settings),
                 style = MaterialTheme.starterTypography.body12SemiBold.copy(
                     color = MaterialTheme.starterColors.neutrals500
                 )
@@ -103,22 +105,11 @@ class ProfileScreen : Screen {
             ProfileItem(
                 icon = {
                     Icon(
-                        painter = painterResource(id = R.drawable.ic_personalcard),
-                        contentDescription = null
-                    )
-                },
-                title = "ID Verification",
-                onClick = { },
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            ProfileItem(
-                icon = {
-                    Icon(
                         painter = painterResource(id = R.drawable.ic_call),
                         contentDescription = null
                     )
                 },
-                title = "Phone Number",
+                title = stringResource(R.string.phone_number),
                 onClick = { },
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -129,7 +120,7 @@ class ProfileScreen : Screen {
                         contentDescription = null
                     )
                 },
-                title = "Payment Method",
+                title = stringResource(R.string.payment_method),
                 onClick = { },
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -140,7 +131,7 @@ class ProfileScreen : Screen {
                         contentDescription = null
                     )
                 },
-                title = "Ratings",
+                title = stringResource(R.string.ratings),
                 onClick = { }
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -151,12 +142,12 @@ class ProfileScreen : Screen {
                         contentDescription = null
                     )
                 },
-                title = "Change Password",
+                title = stringResource(R.string.change_password),
                 onClick = { }
             )
             Spacer(modifier = Modifier.height(24.dp))
             Text(
-                text = "SUPPORT",
+                text = stringResource(R.string.support),
                 style = MaterialTheme.starterTypography.body12SemiBold.copy(
                     color = MaterialTheme.starterColors.neutrals500
                 )
@@ -169,8 +160,8 @@ class ProfileScreen : Screen {
                         contentDescription = null
                     )
                 },
-                title = "Language",
-                onClick = { }
+                title = stringResource(R.string.language),
+                onClick = { navigator.push(LanguageScreen()) }
             )
             Spacer(modifier = Modifier.height(8.dp))
             ProfileItem(
@@ -180,7 +171,7 @@ class ProfileScreen : Screen {
                         contentDescription = null
                     )
                 },
-                title = "FAQ",
+                title = stringResource(R.string.faq),
                 onClick = { }
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -191,7 +182,7 @@ class ProfileScreen : Screen {
                         contentDescription = null
                     )
                 },
-                title = "Privacy Policy",
+                title = stringResource(R.string.privacy_policy),
                 onClick = { }
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -202,12 +193,12 @@ class ProfileScreen : Screen {
                         contentDescription = null
                     )
                 },
-                title = "Contact Us",
+                title = stringResource(R.string.contact_us),
                 onClick = { }
             )
             Spacer(modifier = Modifier.height(24.dp))
             Text(
-                text = "DANGER ZONE",
+                text = stringResource(R.string.danger_zone),
                 style = MaterialTheme.starterTypography.body12SemiBold.copy(
                     color = MaterialTheme.starterColors.neutrals500
                 )
@@ -215,7 +206,7 @@ class ProfileScreen : Screen {
             Spacer(modifier = Modifier.height(16.dp))
             NormalOutlinedButton(
                 modifier = Modifier.fillMaxWidth(),
-                text = "Logout",
+                text = stringResource(R.string.logout),
                 onClick = { isLogoutDialogVisible = true },
                 borderColor = MaterialTheme.starterColors.error,
                 colors = ButtonDefaults.outlinedButtonColors(

@@ -9,6 +9,7 @@ import com.kotlinhero.starter.core.foundation.di.KtorModule
 import com.kotlinhero.starter.core.foundation.di.PreferencesDataStoreModule
 import com.kotlinhero.starter.core.foundation.domain.flavors.BuildType
 import com.kotlinhero.starter.features.auth.AuthModule
+import com.kotlinhero.starter.features.settings.SettingsModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androix.startup.KoinStartup
@@ -37,6 +38,7 @@ class StarterApplication : Application(), KoinStartup {
             CoreModule().module,
             AppModule().module,
             UserDataStoreModule().module,
+            SettingsModule().module
         )
     }
 }

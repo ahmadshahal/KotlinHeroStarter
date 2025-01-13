@@ -17,6 +17,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -82,7 +83,7 @@ class RegisterScreen : Screen, ScreenTransition by SlideTransition() {
             ) {
                 Spacer(modifier = Modifier.height(45.dp))
                 Text(
-                    text = "Create a new\naccount",
+                    text = stringResource(R.string.create_a_new_account),
                     style = MaterialTheme.starterTypography.displayThree.copy(
                         color = MaterialTheme.starterColors.baseBlack
                     )
@@ -91,7 +92,7 @@ class RegisterScreen : Screen, ScreenTransition by SlideTransition() {
                 NormalTextField(
                     value = state.fullName,
                     onValueChange = viewModel::onFullNameChange,
-                    hint = "Full Name",
+                    hint = stringResource(R.string.full_name),
                     prefix = { isFocused ->
                         val color =
                             if (isFocused) MaterialTheme.starterColors.neutrals500 else MaterialTheme.starterColors.neutrals200
@@ -109,7 +110,7 @@ class RegisterScreen : Screen, ScreenTransition by SlideTransition() {
                 NormalTextField(
                     value = state.email,
                     onValueChange = viewModel::onEmailChange,
-                    hint = "Email",
+                    hint = stringResource(R.string.email),
                     prefix = { isFocused ->
                         val color =
                             if (isFocused) MaterialTheme.starterColors.neutrals500 else MaterialTheme.starterColors.neutrals200
@@ -127,7 +128,7 @@ class RegisterScreen : Screen, ScreenTransition by SlideTransition() {
                 NormalTextField(
                     value = state.password,
                     onValueChange = viewModel::onPasswordChange,
-                    hint = "Password",
+                    hint = stringResource(R.string.password),
                     isError = state.passwordValidationState.isInvalid,
                     errorMessage = state.passwordValidationState.errorMessageOrNull,
                     prefix = { isFocused ->
@@ -144,7 +145,7 @@ class RegisterScreen : Screen, ScreenTransition by SlideTransition() {
                 )
                 Spacer(modifier = Modifier.height(32.dp))
                 NormalButton(
-                    text = "Register",
+                    text = stringResource(R.string.register),
                     onClick = viewModel::register,
                     modifier = Modifier.fillMaxWidth()
                 )

@@ -3,15 +3,17 @@ package com.kotlinhero.starter.core.foundation.presentation.components
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import com.kotlinhero.starter.R
 import com.kotlinhero.starter.app.presentation.theme.starterColors
 import com.kotlinhero.starter.app.presentation.theme.starterTypography
 import com.kotlinhero.starter.core.foundation.presentation.components.pulse.PulsingLoadingIndicator
 
 @Composable
 fun SetupBiometricsLoadingDialog(
-    title: String = "Authenticating Biometrics",
-    subtitle: String? = "Working on authenticating you by biometrics"
+    title: String = stringResource(R.string.authenticating_biometrics),
+    subtitle: String? = stringResource(R.string.working_on_authenticating_you_by_biometrics)
 ) {
     NormalDialog(
         onDismissRequest = { },
