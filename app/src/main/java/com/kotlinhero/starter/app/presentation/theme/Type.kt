@@ -2,6 +2,7 @@ package com.kotlinhero.starter.app.presentation.theme
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.text.TextStyle
@@ -248,13 +249,21 @@ data class StarterTypography(
     )
 }
 
-private val LocalStarterTypography = staticCompositionLocalOf {
+private val LocalStarterTypography = staticCompositionLocalOf<StarterTypography> {
+    error("No StarterTypography provided")
+}
+
+@Composable
+fun ProvideStarterTypography(content: @Composable () -> Unit) {
     val language = LocalizationUtils.getSelectedLanguage()
-    val fontBasedOnLanguage = when(language) {
+    val fontBasedOnLanguage = when (language) {
         Language.English -> plusJakarta
         Language.Arabic -> ibmPlexAr
     }
-    StarterTypography(fontFamily = fontBasedOnLanguage)
+    val typography = StarterTypography(fontFamily = fontBasedOnLanguage)
+    CompositionLocalProvider(LocalStarterTypography provides typography) {
+        content()
+    }
 }
 
 val MaterialTheme.starterTypography: StarterTypography

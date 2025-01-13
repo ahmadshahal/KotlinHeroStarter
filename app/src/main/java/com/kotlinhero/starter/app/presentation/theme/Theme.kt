@@ -22,8 +22,10 @@ private val LightColorScheme = lightColorScheme(
 
 @Composable
 fun StarterTheme(content: @Composable () -> Unit) {
-    MaterialTheme(
-        colorScheme = LightColorScheme,
-        content = content
-    )
+    ProvideStarterTypography {
+        MaterialTheme(
+            colorScheme = LightColorScheme,
+            content = content
+        )
+    }
 }
