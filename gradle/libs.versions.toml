@@ -21,6 +21,7 @@ kotlinxSerializationJson = "1.7.3"
 androidx-security-crypto = "1.1.0-alpha06"
 datastore = "1.1.1"
 okhttp = "5.0.0-alpha.8"
+splashScreen = "1.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -70,6 +71,8 @@ androidx-security-crypto = { module = "androidx.security:security-crypto", versi
 androidx-datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
 androidx-datastore-core = { module = "androidx.datastore:datastore-core", version.ref = "datastore" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
+
+androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "splashScreen" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

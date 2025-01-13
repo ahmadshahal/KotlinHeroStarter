@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.kotlinhero.starter.app.domain.usecases.GetStartDestinationUseCase
 import com.kotlinhero.starter.app.presentation.states.MainState
 import com.kotlinhero.starter.core.foundation.utils.states.ResultState
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -15,6 +16,7 @@ import org.koin.android.annotation.KoinViewModel
 class MainViewModel(
     private val getStartDestinationUseCase: GetStartDestinationUseCase,
 ) : ViewModel() {
+    var showSplashScreen = true
 
     private val mutableState = MutableStateFlow(MainState())
     val state: StateFlow<MainState> = mutableState
@@ -31,8 +33,12 @@ class MainViewModel(
         viewModelScope.launch {
             val startDestination = getStartDestinationUseCase()
             mutableState.update {
-                it.copy(startDestinationResultState = ResultState.Success(startDestination))
+                it.copy(
+                    startDestinationResultState = ResultState.Success(startDestination)
+                )
             }
+            delay(800)
+            showSplashScreen = false
         }
     }
 }

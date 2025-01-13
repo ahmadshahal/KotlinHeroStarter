@@ -83,7 +83,7 @@ android {
 }
 
 ksp {
-    arg("KOIN_CONFIG_CHECK","true")
+    arg("KOIN_CONFIG_CHECK", "true")
 }
 
 dependencies {
@@ -137,4 +137,6 @@ dependencies {
 
     implementation(libs.androidx.biometric)
     implementation(libs.androidx.biometric.ktx)
+
+    implementation(libs.androidx.core.splashscreen)
 }
