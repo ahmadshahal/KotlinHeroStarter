@@ -1,9 +1,9 @@
 package com.kotlinhero.starter.domain.usecases
 
-import cafe.adriel.voyager.core.registry.ScreenRegistry
 import cafe.adriel.voyager.core.screen.Screen
 import com.kotlinhero.starter.core.auth.data.SessionManager
-import com.kotlinhero.starter.navigation.KtHeroScreen
+import com.kotlinhero.starter.feature.auth.presentation.screens.LoginScreen
+import com.kotlinhero.starter.presentation.screens.MainScreen
 import kotlinx.coroutines.flow.first
 import org.koin.core.annotation.Factory
 
@@ -14,8 +14,8 @@ class GetStartDestinationUseCase(
     suspend operator fun invoke(): Screen {
         val isLoggedIn = sessionManager.isLoggedInFlow.first()
         return when(isLoggedIn) {
-            true -> ScreenRegistry.get(KtHeroScreen.MainScreen)
-            false -> ScreenRegistry.get(KtHeroScreen.LoginScreen)
+            true -> MainScreen()
+            false -> LoginScreen()
         }
     }
 }
