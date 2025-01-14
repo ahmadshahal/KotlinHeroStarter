@@ -1,8 +1,11 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
-    alias(libs.plugins.android.application) apply false
-    alias(libs.plugins.kotlin.android) apply false
-    alias(libs.plugins.ksp) apply false
-    alias(libs.plugins.compose.compiler) apply false
-    alias(libs.plugins.jetbrainsKotlinSerialization) apply false
+    // id declaration is used instead of alias because of the usage of buildSrc.
+    // Using alias with buildSrc isn't supported yet.
+    // More on this: https://github.com/gradle/gradle/issues/20084
+    id(libs.plugins.android.application.get().pluginId) apply false
+    id(libs.plugins.android.library.get().pluginId) apply false
+    id(libs.plugins.kotlin.android.get().pluginId) apply false
+    id(libs.plugins.ksp.get().pluginId) apply false
+    id(libs.plugins.compose.compiler.get().pluginId) apply false
+    id(libs.plugins.jetbrainsKotlinSerialization.get().pluginId) apply false
 }
