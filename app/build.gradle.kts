@@ -1,21 +1,27 @@
+import com.kotlinhero.starter.buildsrc.BuildConstants
+
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.jetbrainsKotlinSerialization)
+    // id declaration is used instead of alias because of the usage of buildSrc
+    // Using alias with buildSrc isn't supported yet.
+    // More on this: https://github.com/gradle/gradle/issues/20084
+    id(libs.plugins.android.application.get().pluginId)
+    id(libs.plugins.kotlin.android.get().pluginId)
+    id(libs.plugins.ksp.get().pluginId)
+    id(libs.plugins.compose.compiler.get().pluginId)
+    id(libs.plugins.jetbrainsKotlinSerialization.get().pluginId)
 }
 
 android {
     namespace = "com.kotlinhero.starter"
-    compileSdk = 35
+    compileSdk = BuildConstants.COMPILE_SDK_VERSION
 
     defaultConfig {
-        applicationId = "com.kotlinhero.starter"
-        minSdk = 24
-        targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
+        applicationId = BuildConstants.APPLICATION_ID
+        minSdk = BuildConstants.MIN_SDK_VERSION
+        targetSdk = BuildConstants.TARGET_SDK_VERSION
+
+        versionCode = BuildConstants.VERSION_CODE
+        versionName = BuildConstants.VERSION_NAME
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -68,11 +74,11 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = BuildConstants.JAVA_VERSION
+        targetCompatibility = BuildConstants.JAVA_VERSION
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = BuildConstants.JVM_TARGET
     }
     buildFeatures {
         compose = true
@@ -90,67 +96,47 @@ ksp {
 }
 
 dependencies {
+    implementation(project(":core"))
+    implementation(project(":navigation"))
+    implementation(project(":feature:auth"))
+    implementation(project(":feature:settings"))
+    implementation(project(":res"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
+
     implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.bundles.compose.bundle)
     implementation(libs.androidx.material3)
 
-    testImplementation(libs.junit)
+    /*
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
+     */
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    testImplementation(libs.testing.mockito)
-    testImplementation(libs.testing.mockito.inline)
-    testImplementation(libs.testing.mockito.kotlin)
-    testImplementation(libs.testing.androidx.core)
-    testImplementation(libs.testing.androidx.junit)
-    testImplementation(libs.testing.coroutines)
-    testImplementation(libs.androidx.test.rules)
-    testImplementation(libs.androidx.test.runner)
+    testImplementation(libs.bundles.android.test.bundle)
 
     implementation(project.dependencies.platform(libs.koin.bom))
-    implementation(libs.koin.core)
-    implementation(libs.koin.android)
-    implementation(libs.koin.startup)
-    implementation(libs.koin.compose)
-    implementation(libs.koin.compose.navigation)
-
-    implementation(libs.koin.annotations)
+    implementation(libs.bundles.koin.bundle)
     ksp(libs.koin.annotations.compiler)
 
-    implementation(libs.voyager.navigator)
-    implementation(libs.voyager.transitions)
-    implementation(libs.voyager.koin)
+    implementation(libs.bundles.voyager.bundle)
 
-
-    implementation(libs.ktor.client.core)
-    implementation(libs.ktor.client.okhttp)
-    implementation(libs.ktor.client.auth)
-    implementation(libs.ktor.client.content.negotiation)
-    implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.bundles.ktor.bundle)
     implementation(libs.okhttp.logging)
 
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.bundles.datastore.bundle)
 
     implementation(libs.jakewharton.timber)
 
     implementation(libs.androidx.security.crypto)
-
-    implementation(libs.androidx.datastore)
-    implementation(libs.androidx.datastore.core)
-    implementation(libs.androidx.datastore.preferences)
-
-    implementation(libs.androidx.biometric)
-    implementation(libs.androidx.biometric.ktx)
+    implementation(libs.bundles.biometric.bundle)
 
     implementation(libs.androidx.core.splashscreen)
 }

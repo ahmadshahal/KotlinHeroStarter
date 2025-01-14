@@ -49,7 +49,6 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
-junit = { group = "junit", name = "junit", version.ref = "junit" }
 
 koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin-bom" }
 koin-core = { module = "io.insert-koin:koin-core" }
@@ -62,11 +61,9 @@ koin-annotations-compiler = { module = "io.insert-koin:koin-ksp-compiler", versi
 
 voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
 voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
-voyager-koin = { module = "cafe.adriel.voyager:voyager-koin", version.ref = "voyager" }
 
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktorClient" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktorClient" }
-ktor-client-auth = { module = "io.ktor:ktor-client-auth", version.ref = "ktorClient" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktorClient" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktorClient" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
@@ -81,6 +78,7 @@ androidx-datastore-preferences = { module = "androidx.datastore:datastore-prefer
 
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "splashScreen" }
 
+junit = { group = "junit", name = "junit", version.ref = "junit" }
 testing-mockito = { module = "org.mockito:mockito-core", version.ref = "mockito" }
 testing-mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockito" }
 testing-mockito-kotlin = { module = "com.nhaarman.mockitokotlin2:mockito-kotlin", version.ref = "mockito-kotlin" }
@@ -90,8 +88,54 @@ testing-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test",
 androidx-test-rules = { module = "androidx.test:rules", version.ref = "androidx-test-rules" }
 androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidx-test-runner" }
 
+[bundles]
+compose-bundle = [
+    "androidx-ui",
+    "androidx-ui-graphics",
+    "androidx-ui-tooling-preview"
+]
+android-test-bundle = [
+    "testing-mockito",
+    "testing-mockito-kotlin",
+    "testing-mockito-inline",
+    "testing-androidx-core",
+    "testing-androidx-junit",
+    "testing-coroutines",
+    "androidx-test-rules",
+    "androidx-test-runner",
+    "junit"
+]
+koin-bundle = [
+    "koin-android",
+    "koin-compose",
+    "koin-core",
+    "koin-startup",
+    "koin-compose-navigation",
+    "koin-annotations",
+]
+ktor-bundle = [
+    "ktor-client-content-negotiation",
+    "ktor-client-core",
+    "ktor-serialization-kotlinx-json",
+    "ktor-client-okhttp",
+]
+voyager-bundle = [
+    "voyager-navigator",
+    "voyager-transitions"
+]
+datastore-bundle = [
+    "androidx-datastore",
+    "androidx-datastore-core",
+    "androidx-datastore-preferences",
+]
+biometric-bundle = [
+    "androidx-biometric",
+    "androidx-biometric-ktx",
+]
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "com-google-devtools-ksp" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

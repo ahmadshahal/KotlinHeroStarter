@@ -10,11 +10,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import cafe.adriel.voyager.core.registry.ScreenRegistry
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.FadeTransition
-import com.kotlinhero.starter.app.presentation.theme.StarterTheme
-import com.kotlinhero.starter.app.presentation.viewmodels.MainViewModel
-import com.kotlinhero.starter.features.auth.presentation.screens.LoginScreen
+import com.kotlinhero.starter.core.foundation.presentation.theme.StarterTheme
+import com.kotlinhero.starter.navigation.KtHeroScreen
+import com.kotlinhero.starter.presentation.viewmodels.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
@@ -38,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         setContent {
             val state by viewModel.state.collectAsStateWithLifecycle()
             StarterTheme {
-                Navigator(LoginScreen()) { navigator ->
+                Navigator(ScreenRegistry.get(KtHeroScreen.LoginScreen)) { navigator ->
                     LaunchedEffect(state.startDestinationResultState) {
                         if (state.startDestinationResultState.isSuccess) {
                             val startDestination = state.startDestinationResultState.dataOrNull
