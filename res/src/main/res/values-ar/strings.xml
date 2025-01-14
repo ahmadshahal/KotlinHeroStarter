@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setup_your_biometric_login">قم بإعداد تسجيل الدخول باستخدام البصمة</string>
+    <string name="email">البريد الإلكتروني</string>
+    <string name="password">كلمة المرور</string>
+    <string name="authorize">تفويض</string>
+    <string name="login_to_your_account">قم بتسجيل الدخول إلى حسابك</string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="biometric_login">تسجيل الدخول بالبصمة</string>
+    <string name="don_t_have_an_account">ليس لديك حساب؟</string>
+    <string name="register">إنشاء حساب</string>
+    <string name="create_a_new_account">قم بإنشاء حساب جديد</string>
+    <string name="full_name">الاسم الكامل</string>
+    <string name="something_went_wrong">حدث خطأ ما</string>
+    <string name="please_try_again">يرجى المحاولة مرة أخرى..</string>
+    <string name="loading">جارٍ التحميل..</string>
+    <string name="content_is_now_coming_your_way">المحتوى في طريقه إليك..</string>
+    <string name="are_you_sure_you_want_to_logout">هل أنت متأكد أنك تريد تسجيل الخروج؟</string>
+    <string name="you_will_have_to_enter_your_credentials_again">سيُطلب منك إدخال بيانات تسجيل الدخول مرة أخرى..</string>
+    <string name="cancel">إلغاء</string>
+    <string name="logout">تسجيل الخروج</string>
+    <string name="authenticating_biometrics">جاري التحقق باستخدام البصمة</string>
+    <string name="working_on_authenticating_you_by_biometrics">جارٍ التحقق من هويتك باستخدام البصمة</string>
+    <string name="kotlin_hero_starter_app_authentication">مصادقة تطبيق كوتلن هيرو ستارتر</string>
+    <string name="please_login_to_get_access">يرجى تسجيل الدخول للوصول</string>
+    <string name="use_app_password">استخدام كلمة مرور التطبيق</string>
+    <string name="home">الرئيسية</string>
+    <string name="chat">المحادثة</string>
+    <string name="profile">الشخصي</string>
+    <string name="general_settings">الإعدادات العامة</string>
+    <string name="phone_number">رقم الهاتف</string>
+    <string name="payment_method">طريقة الدفع</string>
+    <string name="ratings">التقييمات</string>
+    <string name="change_password">تغيير كلمة المرور</string>
+    <string name="support">الدعم</string>
+    <string name="language">اللغة</string>
+    <string name="faq">الأسئلة الشائعة</string>
+    <string name="privacy_policy">سياسة الخصوصية</string>
+    <string name="contact_us">تواصل معنا</string>
+    <string name="danger_zone">منطقة الخطر</string>
+    <string name="arabic">العربية</string>
+    <string name="english">الإنجليزية</string>
+</resources>

@@ -1,3 +1,5 @@
+import com.kotlinhero.starter.buildsrc.BuildConstants
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -8,14 +10,15 @@ plugins {
 
 android {
     namespace = "com.kotlinhero.starter"
-    compileSdk = 35
+    compileSdk = BuildConstants.COMPILE_SDK_VERSION
 
     defaultConfig {
-        applicationId = "com.kotlinhero.starter"
-        minSdk = 24
-        targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
+        applicationId = BuildConstants.APPLICATION_ID
+        minSdk = BuildConstants.MIN_SDK_VERSION
+        targetSdk = BuildConstants.TARGET_SDK_VERSION
+
+        versionCode = BuildConstants.VERSION_CODE
+        versionName = BuildConstants.VERSION_NAME
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -68,11 +71,11 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = BuildConstants.JAVA_VERSION
+        targetCompatibility = BuildConstants.JAVA_VERSION
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = BuildConstants.JVM_TARGET
     }
     buildFeatures {
         compose = true
@@ -90,6 +93,11 @@ ksp {
 }
 
 dependencies {
+    implementation(project(":core"))
+    implementation(project(":navigation"))
+    implementation(project(":feature:auth"))
+    implementation(project(":feature:settings"))
+    implementation(project(":res"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
