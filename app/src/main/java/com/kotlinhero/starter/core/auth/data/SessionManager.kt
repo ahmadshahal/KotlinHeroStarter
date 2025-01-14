@@ -133,6 +133,10 @@ internal class SessionManagerImpl(
     override suspend fun login(refreshToken: String) {
         // This login type does not save the user locally and should be fetched from the server.
         _refreshToken.value = refreshToken
+
+        // Commenting this will enforce the user to login each time they open the application
+        // either by biometrics or by password.
+
         // saveRefreshToken(refreshToken)
     }
 
