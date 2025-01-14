@@ -100,6 +100,7 @@ android-test-bundle = [
     "testing-mockito-inline",
     "testing-androidx-core",
     "testing-androidx-junit",
+    "testing-coroutines",
     "androidx-test-rules",
     "androidx-test-runner",
     "junit"
