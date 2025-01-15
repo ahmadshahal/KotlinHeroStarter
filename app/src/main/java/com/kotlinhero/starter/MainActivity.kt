@@ -10,7 +10,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import cafe.adriel.voyager.core.registry.ScreenRegistry
+import cafe.adriel.voyager.core.registry.rememberScreen
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.FadeTransition
 import com.kotlinhero.starter.core.foundation.presentation.theme.StarterTheme
@@ -39,7 +39,9 @@ class MainActivity : AppCompatActivity() {
         setContent {
             val state by viewModel.state.collectAsStateWithLifecycle()
             StarterTheme {
-                Navigator(ScreenRegistry.get(KtHeroScreen.LoginScreen)) { navigator ->
+                val loginScreen = rememberScreen(KtHeroScreen.LoginScreen)
+                Navigator(loginScreen) { navigator ->
+                    FadeTransition(navigator)
                     LaunchedEffect(state.startDestinationResultState) {
                         if (state.startDestinationResultState.isSuccess) {
                             val startDestination = state.startDestinationResultState.dataOrNull
@@ -48,7 +50,6 @@ class MainActivity : AppCompatActivity() {
                             viewModel.resetStartDestinationResultState()
                         }
                     }
-                    FadeTransition(navigator)
                 }
             }
         }
