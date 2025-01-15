@@ -2,6 +2,7 @@ package com.kotlinhero.starter.settings
 
 import com.kotlinhero.starter.core.foundation.domain.enums.Language
 import com.kotlinhero.starter.core.foundation.utils.localization.LocalizationUtils
+import com.kotlinhero.starter.settings.presentation.viewmodels.LanguageViewModel
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Before
@@ -9,12 +10,11 @@ import org.junit.Test
 
 class LanguageViewModelTest {
 
-    private lateinit var languageViewModel: com.kotlinhero.starter.settings.presentation.viewmodels.LanguageViewModel
+    private lateinit var languageViewModel: LanguageViewModel
 
     @Before
     fun setup() {
-        languageViewModel =
-            com.kotlinhero.starter.settings.presentation.viewmodels.LanguageViewModel()
+        languageViewModel = LanguageViewModel()
     }
 
     @Test
