@@ -9,6 +9,6 @@ object BuildConstants {
     const val TARGET_SDK_VERSION = 35
     const val VERSION_CODE = 1
     const val VERSION_NAME = "1.0"
-    val JAVA_VERSION = JavaVersion.VERSION_1_8
-    const val JVM_TARGET = "1.8"
+    val JAVA_VERSION = JavaVersion.VERSION_17
+    const val JVM_TARGET = "17"
 }
