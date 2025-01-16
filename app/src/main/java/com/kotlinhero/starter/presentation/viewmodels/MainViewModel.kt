@@ -2,7 +2,7 @@ package com.kotlinhero.starter.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kotlinhero.starter.core.foundation.utils.states.ResultState
+import com.kotlinhero.starter.core.utils.states.ResultState
 import com.kotlinhero.starter.domain.usecases.GetStartDestinationUseCase
 import com.kotlinhero.starter.presentation.states.MainState
 import kotlinx.coroutines.delay

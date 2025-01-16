@@ -16,9 +16,9 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.CurrentScreen
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.FadeTransition
-import com.kotlinhero.starter.core.foundation.presentation.components.StarterBottomNavigationBar
-import com.kotlinhero.starter.core.foundation.presentation.components.StarterNavigationBarItem
-import com.kotlinhero.starter.core.foundation.presentation.theme.starterTypography
+import com.kotlinhero.starter.core.presentation.components.StarterBottomNavigationBar
+import com.kotlinhero.starter.core.presentation.components.StarterNavigationBarItem
+import com.kotlinhero.starter.core.presentation.theme.starterTypography
 import com.kotlinhero.starter.res.R
 
 class MainScreen : Screen {

@@ -1,6 +1,6 @@
 package com.kotlinhero.starter.domain.usecases
 
-import com.kotlinhero.starter.core.auth.data.SessionManager
+import com.kotlinhero.starter.feature.auth.data.SessionManager
 import kotlinx.coroutines.flow.first
 import org.koin.core.annotation.Factory
 

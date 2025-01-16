@@ -1,8 +1,8 @@
 package com.kotlinhero.starter.settings.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
-import com.kotlinhero.starter.core.foundation.domain.enums.Language
-import com.kotlinhero.starter.core.foundation.utils.localization.LocalizationUtils
+import com.kotlinhero.starter.core.domain.enums.Language
+import com.kotlinhero.starter.core.utils.localization.LocalizationUtils
 import com.kotlinhero.starter.settings.presentation.states.LanguageState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

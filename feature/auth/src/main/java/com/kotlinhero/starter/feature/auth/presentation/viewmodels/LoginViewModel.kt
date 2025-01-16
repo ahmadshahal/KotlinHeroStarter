@@ -4,16 +4,15 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kotlinhero.starter.core.auth.domain.entities.LoginCredentials
-import com.kotlinhero.starter.core.auth.domain.usecases.LoginUseCase
-import com.kotlinhero.starter.core.biometrics.domain.usecases.BiometricLoginUseCase
-import com.kotlinhero.starter.core.biometrics.domain.usecases.IsBiometricLoginSetupUseCase
-import com.kotlinhero.starter.core.foundation.domain.usecases.ValidateEmailUseCase
-import com.kotlinhero.starter.core.foundation.utils.isBiometricAvailable
-import com.kotlinhero.starter.core.foundation.utils.states.ResultState
-import com.kotlinhero.starter.core.foundation.utils.states.ValidationState
+import com.kotlinhero.starter.core.domain.usecases.ValidateEmailUseCase
+import com.kotlinhero.starter.core.utils.states.ResultState
+import com.kotlinhero.starter.core.utils.states.ValidationState
+import com.kotlinhero.starter.feature.auth.domain.usecases.BiometricLoginUseCase
+import com.kotlinhero.starter.feature.auth.domain.usecases.IsBiometricLoginSetupUseCase
+import com.kotlinhero.starter.feature.auth.domain.usecases.LoginUseCase
 import com.kotlinhero.starter.feature.auth.presentation.states.BiometricLoginResultState
 import com.kotlinhero.starter.feature.auth.presentation.states.LoginState
+import com.kotlinhero.starter.feature.auth.utils.isBiometricAvailable
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -44,10 +43,11 @@ class LoginViewModel(
         viewModelScope.launch {
             mutableState.update { it.copy(loginResultState = ResultState.Loading()) }
 
-            val loginCredentials = LoginCredentials(
-                email = mutableState.value.email,
-                password = mutableState.value.password,
-            )
+            val loginCredentials =
+                com.kotlinhero.starter.feature.auth.domain.entities.LoginCredentials(
+                    email = mutableState.value.email,
+                    password = mutableState.value.password,
+                )
             val result = loginUseCase(loginCredentials = loginCredentials)
 
             result.fold(

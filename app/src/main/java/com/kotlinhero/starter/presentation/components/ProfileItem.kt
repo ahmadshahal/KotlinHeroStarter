@@ -21,8 +21,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
-import com.kotlinhero.starter.core.foundation.presentation.theme.starterColors
-import com.kotlinhero.starter.core.foundation.presentation.theme.starterTypography
+import com.kotlinhero.starter.core.presentation.theme.starterColors
+import com.kotlinhero.starter.core.presentation.theme.starterTypography
 import com.kotlinhero.starter.res.R
 
 

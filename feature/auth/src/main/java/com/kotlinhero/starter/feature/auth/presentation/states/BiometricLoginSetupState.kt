@@ -1,7 +1,7 @@
 package com.kotlinhero.starter.feature.auth.presentation.states
 
-import com.kotlinhero.starter.core.foundation.utils.states.ResultState
-import com.kotlinhero.starter.core.foundation.utils.states.ValidationState
+import com.kotlinhero.starter.core.utils.states.ResultState
+import com.kotlinhero.starter.core.utils.states.ValidationState
 
 data class BiometricLoginSetupState(
     val loginResultState: ResultState<Unit> = ResultState.Initial(),

@@ -17,9 +17,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import com.kotlinhero.starter.core.foundation.domain.enums.Language
-import com.kotlinhero.starter.core.foundation.presentation.reusables.topbar.DefaultTopBar
-import com.kotlinhero.starter.core.foundation.presentation.theme.starterColors
+import com.kotlinhero.starter.core.domain.enums.Language
+import com.kotlinhero.starter.core.presentation.reusables.topbar.DefaultTopBar
+import com.kotlinhero.starter.core.presentation.theme.starterColors
 import com.kotlinhero.starter.res.R
 import com.kotlinhero.starter.settings.presentation.components.LanguageItem
 import com.kotlinhero.starter.settings.presentation.viewmodels.LanguageViewModel

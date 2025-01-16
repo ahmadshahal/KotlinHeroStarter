@@ -2,13 +2,12 @@ package com.kotlinhero.starter.feature.auth.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kotlinhero.starter.core.auth.domain.entities.RegisterCredentials
-import com.kotlinhero.starter.core.auth.domain.usecases.RegisterUseCase
-import com.kotlinhero.starter.core.foundation.domain.usecases.ValidateEmailUseCase
-import com.kotlinhero.starter.core.foundation.domain.usecases.ValidateFullNameUseCase
-import com.kotlinhero.starter.core.foundation.domain.usecases.ValidatePasswordUseCase
-import com.kotlinhero.starter.core.foundation.utils.states.ResultState
-import com.kotlinhero.starter.core.foundation.utils.states.ValidationState
+import com.kotlinhero.starter.core.domain.usecases.ValidateEmailUseCase
+import com.kotlinhero.starter.core.domain.usecases.ValidateFullNameUseCase
+import com.kotlinhero.starter.core.domain.usecases.ValidatePasswordUseCase
+import com.kotlinhero.starter.core.utils.states.ResultState
+import com.kotlinhero.starter.core.utils.states.ValidationState
+import com.kotlinhero.starter.feature.auth.domain.usecases.RegisterUseCase
 import com.kotlinhero.starter.feature.auth.presentation.states.RegisterState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -61,11 +60,12 @@ class RegisterViewModel(
         viewModelScope.launch {
             mutableState.update { it.copy(registerResultState = ResultState.Loading()) }
 
-            val registerCredentials = RegisterCredentials(
-                email = mutableState.value.email,
-                password = mutableState.value.password,
-                fullName = mutableState.value.fullName
-            )
+            val registerCredentials =
+                com.kotlinhero.starter.feature.auth.domain.entities.RegisterCredentials(
+                    email = mutableState.value.email,
+                    password = mutableState.value.password,
+                    fullName = mutableState.value.fullName
+                )
             val result = registerUseCase(registerCredentials = registerCredentials)
 
             result.fold(

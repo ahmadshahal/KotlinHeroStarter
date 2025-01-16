@@ -12,10 +12,9 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.FadeTransition
-import com.kotlinhero.starter.core.foundation.presentation.theme.StarterTheme
+import com.kotlinhero.starter.core.presentation.theme.StarterTheme
 import com.kotlinhero.starter.domain.usecases.StartDestinationResult
 import com.kotlinhero.starter.feature.auth.presentation.screens.LoginScreen
-import com.kotlinhero.starter.presentation.screens.HomeScreen
 import com.kotlinhero.starter.presentation.screens.MainScreen
 import com.kotlinhero.starter.presentation.viewmodels.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -63,7 +62,7 @@ class MainActivity : AppCompatActivity() {
     ) {
         val destination = when (startDestinationResult) {
             StartDestinationResult.Home -> MainScreen()
-            else -> LoginScreen(onAuthentication = { navigator.replace(item = HomeScreen()) })
+            else -> LoginScreen(onAuthentication = { navigator.replace(item = MainScreen()) })
         }
         navigator.replace(destination)
     }

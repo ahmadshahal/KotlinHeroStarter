@@ -17,8 +17,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.kotlinhero.starter.core.foundation.presentation.theme.starterColors
-import com.kotlinhero.starter.core.foundation.presentation.theme.starterTypography
+import com.kotlinhero.starter.core.presentation.theme.starterColors
+import com.kotlinhero.starter.core.presentation.theme.starterTypography
 import com.kotlinhero.starter.res.R
 
 @Composable

@@ -1,7 +1,7 @@
 package com.kotlinhero.starter.settings
 
-import com.kotlinhero.starter.core.foundation.domain.enums.Language
-import com.kotlinhero.starter.core.foundation.utils.localization.LocalizationUtils
+import com.kotlinhero.starter.core.domain.enums.Language
+import com.kotlinhero.starter.core.utils.localization.LocalizationUtils
 import com.kotlinhero.starter.settings.presentation.viewmodels.LanguageViewModel
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert

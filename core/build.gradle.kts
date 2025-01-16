@@ -10,5 +10,4 @@ dependencies {
     implementation(project(":res"))
 
     implementation(libs.androidx.security.crypto)
-    implementation(libs.bundles.biometric.bundle)
 }
