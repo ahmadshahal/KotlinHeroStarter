@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.core.registry.ScreenRegistry
+import cafe.adriel.voyager.core.registry.rememberScreen
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.CurrentScreen
 import cafe.adriel.voyager.navigator.Navigator
@@ -27,9 +27,9 @@ class MainScreen : Screen {
 
     @Composable
     override fun Content() {
-        Navigator(ScreenRegistry.get(KtHeroScreen.HomeScreen)) { navigator ->
+        val homeScreen = rememberScreen(KtHeroScreen.HomeScreen)
+        Navigator(screen = homeScreen) { navigator ->
             FadeTransition(navigator)
-
             Box(modifier = Modifier.fillMaxSize()) {
                 CurrentScreen()
                 StarterBottomNavigationBar(
@@ -37,7 +37,6 @@ class MainScreen : Screen {
                         .align(Alignment.BottomCenter)
                         .padding(bottom = 16.dp)
                 ) {
-                    val homeScreen = ScreenRegistry.get(KtHeroScreen.HomeScreen)
                     val isHome = navigator.lastItemOrNull?.javaClass == homeScreen.javaClass
                     StarterNavigationBarItem(
                         selected = isHome,
@@ -79,7 +78,7 @@ class MainScreen : Screen {
                         }
                     )
 
-                    val profileScreen = ScreenRegistry.get(KtHeroScreen.ProfileScreen)
+                    val profileScreen = rememberScreen(KtHeroScreen.ProfileScreen)
                     val isProfile = navigator.lastItemOrNull?.javaClass == profileScreen.javaClass
                     StarterNavigationBarItem(
                         selected = isProfile,

@@ -22,6 +22,13 @@ android {
         minSdk = BuildConstants.MIN_SDK_VERSION
         targetSdk = BuildConstants.TARGET_SDK_VERSION
 
+        // This is required so that other modules get visibility for the VersionName
+        buildConfigField(
+            type = "String",
+            name = "VERSION_NAME",
+            value = "\"${BuildConstants.VERSION_NAME}\""
+        )
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 

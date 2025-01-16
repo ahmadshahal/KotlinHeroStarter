@@ -162,7 +162,7 @@ class ProfileScreen : Screen {
                 },
                 title = stringResource(R.string.language),
                 onClick = {
-                    navigator.push(ScreenRegistry.get(KtHeroScreen.ProfileScreen))
+                    navigator.push(ScreenRegistry.get(KtHeroScreen.LanguageScreen))
                 }
             )
             Spacer(modifier = Modifier.height(8.dp))
