@@ -5,32 +5,22 @@ sealed class Either<L, R> {
 
     data class Right<L, R>(val value: R) : Either<L, R>()
 
-    fun <T> mapRight(transform: (R) -> T): Either<L, T> = when (this) {
+    inline fun <T> mapRight(transform: (R) -> T): Either<L, T> = when (this) {
         is Left -> Left(this.value)
         is Right -> Right(transform(this.value))
     }
 
-    suspend fun <T> mapRightSuspend(transform: suspend (R) -> T): Either<L, T> = when (this) {
-        is Left -> Left(this.value)
-        is Right -> Right(transform(this.value))
-    }
-
-    fun <T> mapLeft(transform: (L) -> T): Either<T, R> = when (this) {
+    inline fun <T> mapLeft(transform: (L) -> T): Either<T, R> = when (this) {
         is Left -> Left(transform(this.value))
         is Right -> Right(this.value)
     }
 
-    fun <T> flatMapRight(transform: (R) -> Either<L, T>): Either<L, T> = when (this) {
+    inline fun <T> flatMapRight(transform: (R) -> Either<L, T>): Either<L, T> = when (this) {
         is Left -> Left(this.value)
         is Right -> transform(this.value)
     }
 
-    suspend fun <T> flatMapRightSuspend(transform: suspend (R) -> Either<L, T>): Either<L, T> = when (this) {
-        is Left -> Left(this.value)
-        is Right -> transform(this.value)
-    }
-
-    fun <T> flatMapLeft(transform: (L) -> Either<T, R>): Either<T, R> = when (this) {
+    inline fun <T> flatMapLeft(transform: (L) -> Either<T, R>): Either<T, R> = when (this) {
         is Left -> transform(this.value)
         is Right -> Right(this.value)
     }
