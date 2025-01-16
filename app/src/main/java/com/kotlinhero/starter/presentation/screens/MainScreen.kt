@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.core.registry.rememberScreen
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.CurrentScreen
 import cafe.adriel.voyager.navigator.Navigator
@@ -20,15 +19,13 @@ import cafe.adriel.voyager.transitions.FadeTransition
 import com.kotlinhero.starter.core.foundation.presentation.components.StarterBottomNavigationBar
 import com.kotlinhero.starter.core.foundation.presentation.components.StarterNavigationBarItem
 import com.kotlinhero.starter.core.foundation.presentation.theme.starterTypography
-import com.kotlinhero.starter.navigation.KtHeroScreen
 import com.kotlinhero.starter.res.R
 
 class MainScreen : Screen {
 
     @Composable
     override fun Content() {
-        val homeScreen = rememberScreen(KtHeroScreen.HomeScreen)
-        Navigator(screen = homeScreen) { navigator ->
+        Navigator(screen = HomeScreen()) { navigator ->
             FadeTransition(navigator)
             Box(modifier = Modifier.fillMaxSize()) {
                 CurrentScreen()
@@ -37,11 +34,11 @@ class MainScreen : Screen {
                         .align(Alignment.BottomCenter)
                         .padding(bottom = 16.dp)
                 ) {
-                    val isHome = navigator.lastItemOrNull?.javaClass == homeScreen.javaClass
+                    val isHome = navigator.lastItemOrNull is HomeScreen
                     StarterNavigationBarItem(
                         selected = isHome,
                         onClick = {
-                            navigator.replace(homeScreen)
+                            navigator.replace(HomeScreen())
                         },
                         icon = {
                             val icon =
@@ -78,12 +75,11 @@ class MainScreen : Screen {
                         }
                     )
 
-                    val profileScreen = rememberScreen(KtHeroScreen.ProfileScreen)
-                    val isProfile = navigator.lastItemOrNull?.javaClass == profileScreen.javaClass
+                    val isProfile = navigator.lastItemOrNull is ProfileScreen
                     StarterNavigationBarItem(
                         selected = isProfile,
                         onClick = {
-                            navigator.replace(profileScreen)
+                            navigator.replace(ProfileScreen())
                         },
                         icon = {
                             val icon =

@@ -31,7 +31,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import cafe.adriel.voyager.core.registry.ScreenRegistry
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
@@ -45,11 +44,10 @@ import com.kotlinhero.starter.core.foundation.presentation.theme.starterColors
 import com.kotlinhero.starter.core.foundation.presentation.theme.starterTypography
 import com.kotlinhero.starter.core.foundation.utils.getActivity
 import com.kotlinhero.starter.feature.auth.presentation.viewmodels.LoginViewModel
-import com.kotlinhero.starter.navigation.KtHeroScreen
 import com.kotlinhero.starter.res.R
 import org.koin.androidx.compose.koinViewModel
 
-class LoginScreen : Screen {
+class LoginScreen(private val onAuthentication: () -> Unit = {}) : Screen {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
@@ -69,8 +67,8 @@ class LoginScreen : Screen {
                     navigator.push(BiometricLoginSetupScreen())
                 }
                 state.biometricResultState.isSuccess -> {
-                    navigator.replace(ScreenRegistry.get(KtHeroScreen.MainScreen))
                     viewModel.resetBiometricLoginResultState()
+                    onAuthentication()
                 }
             }
         }
@@ -79,7 +77,7 @@ class LoginScreen : Screen {
             when {
                 state.loginResultState.isSuccess -> {
                     viewModel.resetLoginResultState()
-                    navigator.replace(ScreenRegistry.get(KtHeroScreen.MainScreen))
+                    onAuthentication()
                 }
             }
         }
@@ -183,7 +181,15 @@ class LoginScreen : Screen {
                             interactionSource = remember { MutableInteractionSource() },
                             indication = null,
                             onClick = {
-                                navigator.push(RegisterScreen())
+                                navigator.push(
+                                    RegisterScreen(
+                                        onRegistration = {
+                                            // Return to LoginScreen
+                                            navigator.pop()
+                                            onAuthentication()
+                                        }
+                                    )
+                                )
                             },
                         )
                     )

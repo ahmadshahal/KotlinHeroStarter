@@ -64,7 +64,7 @@ private fun CircularCheckbox(
                 .size(24.dp)
                 .border(
                     width = 1.dp,
-                    color = MaterialTheme.starterColors.baseBlack,
+                    color = MaterialTheme.starterColors.white,
                     shape = CircleShape
                 )
                 .clip(CircleShape)

@@ -22,7 +22,6 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.annotation.ExperimentalVoyagerApi
-import cafe.adriel.voyager.core.registry.ScreenRegistry
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
@@ -36,12 +35,13 @@ import com.kotlinhero.starter.core.foundation.presentation.theme.starterColors
 import com.kotlinhero.starter.core.foundation.presentation.theme.starterTypography
 import com.kotlinhero.starter.core.foundation.utils.voyager.transitions.SlideTransition
 import com.kotlinhero.starter.feature.auth.presentation.viewmodels.RegisterViewModel
-import com.kotlinhero.starter.navigation.KtHeroScreen
 import com.kotlinhero.starter.res.R
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalVoyagerApi::class)
-class RegisterScreen : Screen, ScreenTransition by SlideTransition() {
+class RegisterScreen(
+    private val onRegistration: () -> Unit = {}
+) : Screen, ScreenTransition by SlideTransition() {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
@@ -67,7 +67,7 @@ class RegisterScreen : Screen, ScreenTransition by SlideTransition() {
             when {
                 state.registerResultState.isSuccess -> {
                     viewModel.resetRegisterResultState()
-                    navigator.replace(ScreenRegistry.get(KtHeroScreen.MainScreen))
+                    onRegistration()
                 }
             }
         }

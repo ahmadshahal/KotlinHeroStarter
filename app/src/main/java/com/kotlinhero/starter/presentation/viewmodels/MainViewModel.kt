@@ -31,10 +31,10 @@ class MainViewModel(
 
     private fun setStartDestination() {
         viewModelScope.launch {
-            val startDestination = getStartDestinationUseCase()
+            val startDestinationResult = getStartDestinationUseCase()
             mutableState.update {
                 it.copy(
-                    startDestinationResultState = ResultState.Success(startDestination)
+                    startDestinationResultState = ResultState.Success(startDestinationResult)
                 )
             }
             delay(800)

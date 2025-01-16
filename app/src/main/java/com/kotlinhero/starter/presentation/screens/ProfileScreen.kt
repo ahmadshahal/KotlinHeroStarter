@@ -35,11 +35,12 @@ import com.kotlinhero.starter.core.foundation.presentation.components.LogoutDial
 import com.kotlinhero.starter.core.foundation.presentation.reusables.buttons.NormalOutlinedButton
 import com.kotlinhero.starter.core.foundation.presentation.theme.starterColors
 import com.kotlinhero.starter.core.foundation.presentation.theme.starterTypography
-import com.kotlinhero.starter.navigation.KtHeroScreen
+import com.kotlinhero.starter.feature.auth.presentation.screens.LoginScreen
 import com.kotlinhero.starter.presentation.components.ProfileHeader
 import com.kotlinhero.starter.presentation.components.ProfileItem
 import com.kotlinhero.starter.presentation.viewmodels.ProfileViewModel
 import com.kotlinhero.starter.res.R
+import com.kotlinhero.starter.settings.presentation.screens.LanguageScreen
 import org.koin.androidx.compose.koinViewModel
 
 class ProfileScreen : Screen {
@@ -66,7 +67,7 @@ class ProfileScreen : Screen {
             when {
                 state.logoutResultState.isSuccess -> {
                     viewModel.resetLogoutResultState()
-                    navigator.replace(ScreenRegistry.get(KtHeroScreen.LoginScreen))
+                    navigator.replace(LoginScreen())
                 }
             }
         }
@@ -162,7 +163,7 @@ class ProfileScreen : Screen {
                 },
                 title = stringResource(R.string.language),
                 onClick = {
-                    navigator.push(ScreenRegistry.get(KtHeroScreen.LanguageScreen))
+                    navigator.push(LanguageScreen())
                 }
             )
             Spacer(modifier = Modifier.height(8.dp))

@@ -97,7 +97,6 @@ ksp {
 
 dependencies {
     implementation(project(":core"))
-    implementation(project(":navigation"))
     implementation(project(":feature:auth"))
     implementation(project(":feature:settings"))
     implementation(project(":res"))
