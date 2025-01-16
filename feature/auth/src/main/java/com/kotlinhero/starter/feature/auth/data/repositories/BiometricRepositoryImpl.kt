@@ -5,8 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricPrompt
 import com.kotlinhero.starter.core.utils.Either
 import com.kotlinhero.starter.core.utils.failures.Failure
+import com.kotlinhero.starter.feature.auth.data.CryptographyManager
 import com.kotlinhero.starter.feature.auth.data.SessionManager
 import com.kotlinhero.starter.feature.auth.domain.entities.AuthorizationTokens
+import com.kotlinhero.starter.feature.auth.domain.entities.LoginCredentials
+import com.kotlinhero.starter.feature.auth.domain.repositories.BiometricRepository
 import com.kotlinhero.starter.feature.auth.utils.BiometricPromptUtils
 import com.kotlinhero.starter.feature.auth.utils.isBiometricAvailable
 import kotlinx.coroutines.delay
@@ -17,12 +20,12 @@ import kotlin.coroutines.cancellation.CancellationException
 
 private const val SECRET_KEY_NAME = "biometric_secret_key"
 
-@Factory(binds = [com.kotlinhero.starter.feature.auth.domain.repositories.BiometricRepository::class])
+@Factory(binds = [BiometricRepository::class])
 internal class BiometricRepositoryImpl(
-    private val cryptographyManager: com.kotlinhero.starter.feature.auth.data.CryptographyManager,
+    private val cryptographyManager: CryptographyManager,
     private val sessionManager: SessionManager,
     private val applicationContext: Context,
-) : com.kotlinhero.starter.feature.auth.domain.repositories.BiometricRepository {
+) : BiometricRepository {
 
     override suspend fun isBiometricLoginSetup(): Boolean {
         val ciphertextWrapper = sessionManager.getSecretToken()
@@ -31,7 +34,7 @@ internal class BiometricRepositoryImpl(
 
     override suspend fun setupBiometricLogin(
         activity: AppCompatActivity,
-        loginCredentials: com.kotlinhero.starter.feature.auth.domain.entities.LoginCredentials,
+        loginCredentials: LoginCredentials,
     ): Either<Failure, Unit> {
         // TODO: Replace with this in real world scenario..
         // val loginResult = sessionManager.login(loginCredentials)
