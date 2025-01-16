@@ -46,7 +46,7 @@ internal class BiometricRepositoryImpl(
         return loginResult.flatMapRight { authorizationTokens ->
             val isBiometricAvailable = applicationContext.isBiometricAvailable()
             if (!isBiometricAvailable) {
-                return@flatMapRight Either.Left(Failure.BiometricsUnavailable)
+                return Either.Left(Failure.BiometricsUnavailable)
             }
 
             val secretKeyName = SECRET_KEY_NAME
@@ -57,7 +57,7 @@ internal class BiometricRepositoryImpl(
                 activity = activity,
             )
 
-            return@flatMapRight result.mapRight { resultCipher ->
+            return result.mapRight { resultCipher ->
                 // Encrypt the token and save it securely
                 val encryptedToken = cryptographyManager.encryptData(
                     plaintext = authorizationTokens.refreshToken,
