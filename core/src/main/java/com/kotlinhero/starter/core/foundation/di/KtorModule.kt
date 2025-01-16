@@ -1,5 +1,6 @@
 package com.kotlinhero.starter.core.foundation.di
 
+import com.kotlinhero.starter.core.BuildConfig
 import com.kotlinhero.starter.core.auth.data.remote.interceptors.AuthInterceptor
 import com.kotlinhero.starter.core.foundation.data.remote.interceptors.LanguageInterceptor
 import com.kotlinhero.starter.core.foundation.domain.flavors.Flavor
@@ -56,10 +57,7 @@ class KtorModule {
                 url(Flavor.current().baseUrl)
                 header(HttpHeaders.ContentType, ContentType.Application.Json)
                 header("platform", "Android")
-                header("version", "1.0.0")
-
-                // TODO: Add it as an interceptor?
-                header("language", Locale.getDefault().language)
+                header("version", BuildConfig.VERSION_NAME)
             }
 
             install(ContentNegotiation) {
