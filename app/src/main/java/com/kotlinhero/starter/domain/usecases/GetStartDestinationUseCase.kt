@@ -1,21 +1,24 @@
 package com.kotlinhero.starter.domain.usecases
 
-import cafe.adriel.voyager.core.screen.Screen
-import com.kotlinhero.starter.core.auth.data.SessionManager
-import com.kotlinhero.starter.feature.auth.presentation.screens.LoginScreen
-import com.kotlinhero.starter.presentation.screens.MainScreen
+import com.kotlinhero.starter.features.auth.data.SessionManager
 import kotlinx.coroutines.flow.first
 import org.koin.core.annotation.Factory
+
+sealed class StartDestinationResult {
+    data object Auth : StartDestinationResult()
+    data object Home : StartDestinationResult()
+    data object Onboarding : StartDestinationResult()
+}
 
 @Factory
 class GetStartDestinationUseCase(
     private val sessionManager: SessionManager,
 ) {
-    suspend operator fun invoke(): Screen {
+    suspend operator fun invoke(): StartDestinationResult {
         val isLoggedIn = sessionManager.isLoggedInFlow.first()
         return when(isLoggedIn) {
-            true -> MainScreen()
-            false -> LoginScreen()
+            true -> StartDestinationResult.Home
+            false -> StartDestinationResult.Auth
         }
     }
 }

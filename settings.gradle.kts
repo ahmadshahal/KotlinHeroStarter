@@ -23,6 +23,5 @@ rootProject.name = "Starter"
 include(":app")
 include(":core")
 include(":res")
-include(":feature:auth")
-include(":navigation")
-include(":feature:settings")
+include(":features:auth")
+include(":features:settings")

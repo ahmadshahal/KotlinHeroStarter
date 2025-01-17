@@ -1,19 +1,19 @@
 package com.kotlinhero.starter
 
-import cafe.adriel.voyager.core.registry.screenModule
-import com.kotlinhero.starter.navigation.KtHeroScreen
-import com.kotlinhero.starter.presentation.screens.HomeScreen
-import com.kotlinhero.starter.presentation.screens.MainScreen
-import com.kotlinhero.starter.presentation.screens.ProfileScreen
+import com.kotlinhero.starter.features.auth.data.remote.interceptors.AuthInterceptor
+import okhttp3.Interceptor
 import org.koin.core.annotation.ComponentScan
+import org.koin.core.annotation.Factory
 import org.koin.core.annotation.Module
+import org.koin.core.annotation.Named
 
 @Module
 @ComponentScan
-class AppModule
+class AppModule {
 
-val AppNavigationModule = screenModule {
-    register<KtHeroScreen.MainScreen> { MainScreen() }
-    register<KtHeroScreen.HomeScreen> { HomeScreen() }
-    register<KtHeroScreen.ProfileScreen> { ProfileScreen() }
+    @Factory
+    @Named("OkHttpInterceptors")
+    fun provideOkHttpInterceptors(): List<Interceptor> {
+        return listOf(AuthInterceptor())
+    }
 }

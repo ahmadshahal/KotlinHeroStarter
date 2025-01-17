@@ -2,7 +2,7 @@ package com.kotlinhero.starter.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kotlinhero.starter.core.foundation.utils.states.ResultState
+import com.kotlinhero.starter.core.utils.states.ResultState
 import com.kotlinhero.starter.domain.usecases.GetStartDestinationUseCase
 import com.kotlinhero.starter.presentation.states.MainState
 import kotlinx.coroutines.delay
@@ -31,10 +31,10 @@ class MainViewModel(
 
     private fun setStartDestination() {
         viewModelScope.launch {
-            val startDestination = getStartDestinationUseCase()
+            val startDestinationResult = getStartDestinationUseCase()
             mutableState.update {
                 it.copy(
-                    startDestinationResultState = ResultState.Success(startDestination)
+                    startDestinationResultState = ResultState.Success(startDestinationResult)
                 )
             }
             delay(800)

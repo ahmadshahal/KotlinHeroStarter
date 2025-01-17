@@ -25,21 +25,21 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import cafe.adriel.voyager.core.registry.ScreenRegistry
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import com.kotlinhero.starter.core.foundation.presentation.components.ErrorDialog
-import com.kotlinhero.starter.core.foundation.presentation.components.LoadingDialog
-import com.kotlinhero.starter.core.foundation.presentation.components.LogoutDialog
-import com.kotlinhero.starter.core.foundation.presentation.reusables.buttons.NormalOutlinedButton
-import com.kotlinhero.starter.core.foundation.presentation.theme.starterColors
-import com.kotlinhero.starter.core.foundation.presentation.theme.starterTypography
-import com.kotlinhero.starter.navigation.KtHeroScreen
+import com.kotlinhero.starter.core.presentation.components.ErrorDialog
+import com.kotlinhero.starter.core.presentation.components.LoadingDialog
+import com.kotlinhero.starter.core.presentation.components.LogoutDialog
+import com.kotlinhero.starter.core.presentation.reusables.buttons.NormalOutlinedButton
+import com.kotlinhero.starter.core.presentation.theme.starterColors
+import com.kotlinhero.starter.core.presentation.theme.starterTypography
+import com.kotlinhero.starter.features.auth.presentation.screens.LoginScreen
 import com.kotlinhero.starter.presentation.components.ProfileHeader
 import com.kotlinhero.starter.presentation.components.ProfileItem
 import com.kotlinhero.starter.presentation.viewmodels.ProfileViewModel
 import com.kotlinhero.starter.res.R
+import com.kotlinhero.starter.features.settings.presentation.screens.LanguageScreen
 import org.koin.androidx.compose.koinViewModel
 
 class ProfileScreen : Screen {
@@ -66,7 +66,7 @@ class ProfileScreen : Screen {
             when {
                 state.logoutResultState.isSuccess -> {
                     viewModel.resetLogoutResultState()
-                    navigator.replace(ScreenRegistry.get(KtHeroScreen.LoginScreen))
+                    navigator.replace(LoginScreen())
                 }
             }
         }
@@ -162,7 +162,7 @@ class ProfileScreen : Screen {
                 },
                 title = stringResource(R.string.language),
                 onClick = {
-                    navigator.push(ScreenRegistry.get(KtHeroScreen.LanguageScreen))
+                    navigator.push(LanguageScreen())
                 }
             )
             Spacer(modifier = Modifier.height(8.dp))
