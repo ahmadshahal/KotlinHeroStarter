@@ -31,7 +31,7 @@ private const val SETTINGS_NAME = "settings"
 
 @Module
 @ComponentScan
-class CoreModule(private val okHttpInterceptors: List<Interceptor>) {
+class CoreModule {
 
     @Single
     fun providePreferencesDataStore(
@@ -58,7 +58,9 @@ class CoreModule(private val okHttpInterceptors: List<Interceptor>) {
     }
 
     @Single
-    fun provideKtor(@Named("OkHttpInterceptors") interceptors: List<Interceptor> = emptyList()): HttpClient {
+    fun provideKtor(
+        @Named("OkHttpInterceptors") interceptors: List<Interceptor> = emptyList()
+    ): HttpClient {
         return HttpClient(OkHttp) {
             expectSuccess = true
 
@@ -85,7 +87,7 @@ class CoreModule(private val okHttpInterceptors: List<Interceptor>) {
 
                 config { followRedirects(true) }
 
-                okHttpInterceptors.forEach { addInterceptor(it) }
+                interceptors.forEach { addInterceptor(it) }
                 addInterceptor(LanguageInterceptor())
                 addInterceptor(loggingInterceptor)
             }

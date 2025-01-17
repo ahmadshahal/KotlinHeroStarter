@@ -34,12 +34,12 @@ import com.kotlinhero.starter.core.presentation.components.LogoutDialog
 import com.kotlinhero.starter.core.presentation.reusables.buttons.NormalOutlinedButton
 import com.kotlinhero.starter.core.presentation.theme.starterColors
 import com.kotlinhero.starter.core.presentation.theme.starterTypography
-import com.kotlinhero.starter.feature.auth.presentation.screens.LoginScreen
+import com.kotlinhero.starter.features.auth.presentation.screens.LoginScreen
 import com.kotlinhero.starter.presentation.components.ProfileHeader
 import com.kotlinhero.starter.presentation.components.ProfileItem
 import com.kotlinhero.starter.presentation.viewmodels.ProfileViewModel
 import com.kotlinhero.starter.res.R
-import com.kotlinhero.starter.settings.presentation.screens.LanguageScreen
+import com.kotlinhero.starter.features.settings.presentation.screens.LanguageScreen
 import org.koin.androidx.compose.koinViewModel
 
 class ProfileScreen : Screen {

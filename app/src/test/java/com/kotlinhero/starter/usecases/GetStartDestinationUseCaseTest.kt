@@ -2,7 +2,7 @@ package com.kotlinhero.starter.usecases
 
 import com.kotlinhero.starter.domain.usecases.GetStartDestinationUseCase
 import com.kotlinhero.starter.domain.usecases.StartDestinationResult
-import com.kotlinhero.starter.feature.auth.data.SessionManager
+import com.kotlinhero.starter.features.auth.data.SessionManager
 import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.runTest

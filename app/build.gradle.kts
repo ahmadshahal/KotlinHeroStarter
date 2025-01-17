@@ -97,8 +97,8 @@ ksp {
 
 dependencies {
     implementation(project(":core"))
-    implementation(project(":feature:auth"))
-    implementation(project(":feature:settings"))
+    implementation(project(":features:auth"))
+    implementation(project(":features:settings"))
     implementation(project(":res"))
 
     implementation(libs.androidx.core.ktx)
