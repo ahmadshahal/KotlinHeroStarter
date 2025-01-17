@@ -39,7 +39,7 @@ import com.kotlinhero.starter.core.presentation.theme.starterColors
 import com.kotlinhero.starter.core.presentation.theme.starterTypography
 import com.kotlinhero.starter.core.utils.getActivity
 import com.kotlinhero.starter.core.utils.voyager.transitions.SlideTransition
-import com.kotlinhero.starter.features.auth.presentation.viewmodels.BiometricLoginSetupViewModel
+import com.kotlinhero.starter.features.auth.presentation.viewmodels.BiometricAuthSetupViewModel
 import com.kotlinhero.starter.res.R
 import org.koin.androidx.compose.koinViewModel
 
@@ -51,27 +51,27 @@ class BiometricLoginSetupScreen : Screen, ScreenTransition by SlideTransition() 
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
 
-        val viewModel: BiometricLoginSetupViewModel = koinViewModel()
+        val viewModel: BiometricAuthSetupViewModel = koinViewModel()
         val state by viewModel.state.collectAsStateWithLifecycle()
 
         val context = LocalContext.current
         val activity = context.getActivity() as? AppCompatActivity
 
-        LaunchedEffect(state.loginResultState) {
-            if (state.loginResultState.isSuccess) {
+        LaunchedEffect(state.setupResultState) {
+            if (state.setupResultState.isSuccess) {
                 navigator.pop()
-                viewModel.resetLoginResultState()
+                viewModel.resetSetupResultState()
             }
         }
 
-        if (state.loginResultState.isLoading) {
+        if (state.setupResultState.isLoading) {
             SetupBiometricsLoadingDialog()
         }
 
-        if (state.loginResultState.isError) {
+        if (state.setupResultState.isError) {
             ErrorDialog(
-                onDismissRequest = viewModel::resetLoginResultState,
-                subtitle = state.loginResultState.failureOrNull?.getHumanReadableMessage() ?: ""
+                onDismissRequest = viewModel::resetSetupResultState,
+                subtitle = state.setupResultState.failureOrNull?.getHumanReadableMessage() ?: ""
             )
         }
 

@@ -1,4 +1,4 @@
-package com.kotlinhero.starter.features
+package com.kotlinhero.starter.features.settings
 
 import org.koin.core.annotation.ComponentScan
 import org.koin.core.annotation.Module

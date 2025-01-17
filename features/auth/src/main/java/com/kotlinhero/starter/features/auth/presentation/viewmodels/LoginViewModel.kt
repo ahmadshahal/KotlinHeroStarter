@@ -7,8 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.kotlinhero.starter.core.domain.usecases.ValidateEmailUseCase
 import com.kotlinhero.starter.core.utils.states.ResultState
 import com.kotlinhero.starter.core.utils.states.ValidationState
-import com.kotlinhero.starter.features.auth.domain.usecases.BiometricLoginUseCase
-import com.kotlinhero.starter.features.auth.domain.usecases.IsBiometricLoginSetupUseCase
+import com.kotlinhero.starter.features.auth.domain.usecases.BiometricAuthSetupRequiredUseCase
+import com.kotlinhero.starter.features.auth.domain.usecases.BiometricAuthenticateUseCase
 import com.kotlinhero.starter.features.auth.domain.usecases.LoginUseCase
 import com.kotlinhero.starter.features.auth.presentation.states.BiometricLoginResultState
 import com.kotlinhero.starter.features.auth.presentation.states.LoginState
@@ -24,8 +24,8 @@ class LoginViewModel(
     applicationContext: Context,
     private val loginUseCase: LoginUseCase,
     private val validateEmailUseCase: ValidateEmailUseCase,
-    private val biometricLoginUseCase: BiometricLoginUseCase,
-    private val isBiometricLoginSetupUseCase: IsBiometricLoginSetupUseCase,
+    private val biometricAuthenticateUseCase: BiometricAuthenticateUseCase,
+    private val biometricAuthSetupRequiredUseCase: BiometricAuthSetupRequiredUseCase,
 ) : ViewModel() {
 
     private val mutableState = MutableStateFlow(LoginState())
@@ -69,7 +69,7 @@ class LoginViewModel(
         if (activity == null) return
 
         viewModelScope.launch {
-            val isBiometricLoginSetup = isBiometricLoginSetupUseCase()
+            val isBiometricLoginSetup = biometricAuthSetupRequiredUseCase()
             if (!isBiometricLoginSetup) {
                 mutableState.update {
                     it.copy(
@@ -79,7 +79,7 @@ class LoginViewModel(
                 return@launch
             }
 
-            val result = biometricLoginUseCase(activity = activity)
+            val result = biometricAuthenticateUseCase(activity = activity)
             result.fold(
                 onLeft = { },
                 onRight = {

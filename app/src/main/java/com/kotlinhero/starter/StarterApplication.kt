@@ -3,8 +3,8 @@ package com.kotlinhero.starter
 import android.app.Application
 import com.kotlinhero.starter.core.CoreModule
 import com.kotlinhero.starter.core.domain.flavors.BuildType
-import com.kotlinhero.starter.features.SettingsModule
 import com.kotlinhero.starter.features.auth.AuthModule
+import com.kotlinhero.starter.features.settings.SettingsModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androix.startup.KoinStartup

@@ -1,15 +1,12 @@
-package com.kotlinhero.starter.features.auth.data.repositories
+package com.kotlinhero.starter.features.auth.data
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricPrompt
 import com.kotlinhero.starter.core.utils.Either
 import com.kotlinhero.starter.core.utils.failures.Failure
-import com.kotlinhero.starter.features.auth.data.CryptographyManager
-import com.kotlinhero.starter.features.auth.data.SessionManager
 import com.kotlinhero.starter.features.auth.domain.entities.AuthorizationTokens
 import com.kotlinhero.starter.features.auth.domain.entities.LoginCredentials
-import com.kotlinhero.starter.features.auth.domain.repositories.BiometricRepository
 import com.kotlinhero.starter.features.auth.utils.BiometricPromptUtils
 import com.kotlinhero.starter.features.auth.utils.isBiometricAvailable
 import kotlinx.coroutines.delay
@@ -20,19 +17,30 @@ import kotlin.coroutines.cancellation.CancellationException
 
 private const val SECRET_KEY_NAME = "biometric_secret_key"
 
-@Factory(binds = [BiometricRepository::class])
-internal class BiometricRepositoryImpl(
+interface BiometricAuthenticator {
+    suspend fun isSetupRequired(): Boolean
+
+    suspend fun setupAuthentication(
+        activity: AppCompatActivity,
+        loginCredentials: LoginCredentials,
+    ): Either<Failure, Unit>
+
+    suspend fun authenticate(activity: AppCompatActivity): Either<Failure, Unit>
+}
+
+@Factory(binds = [BiometricAuthenticator::class])
+internal class BiometricAuthenticatorImpl(
     private val cryptographyManager: CryptographyManager,
     private val sessionManager: SessionManager,
     private val applicationContext: Context,
-) : BiometricRepository {
+) : BiometricAuthenticator {
 
-    override suspend fun isBiometricLoginSetup(): Boolean {
+    override suspend fun isSetupRequired(): Boolean {
         val ciphertextWrapper = sessionManager.getSecretToken()
         return ciphertextWrapper != null
     }
 
-    override suspend fun setupBiometricLogin(
+    override suspend fun setupAuthentication(
         activity: AppCompatActivity,
         loginCredentials: LoginCredentials,
     ): Either<Failure, Unit> {
@@ -68,7 +76,7 @@ internal class BiometricRepositoryImpl(
         }
     }
 
-    override suspend fun biometricLogin(activity: AppCompatActivity): Either<Failure, Unit> {
+    override suspend fun authenticate(activity: AppCompatActivity): Either<Failure, Unit> {
         val isBiometricAvailable = applicationContext.isBiometricAvailable()
         if (!isBiometricAvailable) {
             return Either.Left(Failure.BiometricsUnavailable)
