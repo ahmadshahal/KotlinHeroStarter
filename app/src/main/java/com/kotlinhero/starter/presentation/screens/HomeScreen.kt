@@ -1,12 +1,9 @@
 package com.kotlinhero.starter.presentation.screens
 
 import androidx.compose.runtime.Composable
-import cafe.adriel.voyager.core.screen.Screen
+import androidx.navigation.NavController
 
-class HomeScreen : Screen {
+@Composable
+fun HomeScreen(navController: NavController) {
 
-    @Composable
-    override fun Content() {
-
-    }
 }

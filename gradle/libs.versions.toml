@@ -14,7 +14,7 @@ composeBom = "2024.12.01"
 com-google-devtools-ksp = "2.1.0-1.0.29"
 koin-bom = "4.1.0-Beta3"
 koin-annotations = "2.0.0-Beta3"
-voyager = "1.1.0-beta03"
+navigationCompose = "2.8.5"
 ktorClient = "3.0.3"
 timber = "5.0.1"
 kotlinxSerializationJson = "1.7.3"
@@ -36,6 +36,7 @@ androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = 
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
@@ -58,9 +59,6 @@ koin-compose = { module = "io.insert-koin:koin-androidx-compose" }
 koin-compose-navigation = { module = "io.insert-koin:koin-androidx-compose-navigation" }
 koin-annotations = { module = "io.insert-koin:koin-annotations", version.ref = "koin-annotations" }
 koin-annotations-compiler = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koin-annotations" }
-
-voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
-voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
 
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktorClient" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktorClient" }
@@ -118,10 +116,6 @@ ktor-bundle = [
     "ktor-client-core",
     "ktor-serialization-kotlinx-json",
     "ktor-client-okhttp",
-]
-voyager-bundle = [
-    "voyager-navigator",
-    "voyager-transitions"
 ]
 datastore-bundle = [
     "androidx-datastore",

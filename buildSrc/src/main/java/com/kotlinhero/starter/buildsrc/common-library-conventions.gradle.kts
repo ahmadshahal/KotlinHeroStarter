@@ -67,6 +67,7 @@ dependencies {
 
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.bundles.compose.bundle)
+    implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.material3)
 
     /*
@@ -83,8 +84,6 @@ dependencies {
     implementation(project.dependencies.platform(libs.koin.bom))
     implementation(libs.bundles.koin.bundle)
     ksp(libs.koin.annotations.compiler)
-
-    implementation(libs.bundles.voyager.bundle)
 
     implementation(libs.bundles.ktor.bundle)
     implementation(libs.okhttp.logging)
