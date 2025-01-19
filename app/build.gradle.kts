@@ -104,6 +104,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.navigation.compose)
 
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.bundles.compose.bundle)
@@ -123,8 +124,6 @@ dependencies {
     implementation(project.dependencies.platform(libs.koin.bom))
     implementation(libs.bundles.koin.bundle)
     ksp(libs.koin.annotations.compiler)
-
-    implementation(libs.bundles.voyager.bundle)
 
     implementation(libs.bundles.ktor.bundle)
     implementation(libs.okhttp.logging)

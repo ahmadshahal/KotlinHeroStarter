@@ -2,8 +2,7 @@ package com.kotlinhero.starter.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kotlinhero.starter.core.utils.states.ResultState
-import com.kotlinhero.starter.domain.usecases.GetStartDestinationUseCase
+import com.kotlinhero.starter.features.auth.domain.usecases.IsAuthenticatedUseCase
 import com.kotlinhero.starter.presentation.states.MainState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +13,7 @@ import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
 class MainViewModel(
-    private val getStartDestinationUseCase: GetStartDestinationUseCase,
+    private val isAuthenticatedUseCase: IsAuthenticatedUseCase,
 ) : ViewModel() {
     var showSplashScreen = true
 
@@ -22,21 +21,17 @@ class MainViewModel(
     val state: StateFlow<MainState> = mutableState
 
     init {
-        setStartDestination()
+        setIsAuthenticated()
     }
 
-    fun resetStartDestinationResultState() = mutableState.update {
-        it.copy(startDestinationResultState = ResultState.Initial())
+    fun resetAuthenticationState() = mutableState.update {
+        it.copy(isAuthenticated = false)
     }
 
-    private fun setStartDestination() {
+    private fun setIsAuthenticated() {
         viewModelScope.launch {
-            val startDestinationResult = getStartDestinationUseCase()
-            mutableState.update {
-                it.copy(
-                    startDestinationResultState = ResultState.Success(startDestinationResult)
-                )
-            }
+            val isAuthenticated = isAuthenticatedUseCase()
+            mutableState.update { it.copy(isAuthenticated = isAuthenticated) }
             delay(800)
             showSplashScreen = false
         }

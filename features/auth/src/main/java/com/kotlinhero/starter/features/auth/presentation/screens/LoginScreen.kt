@@ -31,9 +31,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.currentOrThrow
+import androidx.navigation.NavController
 import com.kotlinhero.starter.core.presentation.components.ErrorDialog
 import com.kotlinhero.starter.core.presentation.components.LoadingDialog
 import com.kotlinhero.starter.core.presentation.reusables.buttons.NormalButton
@@ -43,157 +41,148 @@ import com.kotlinhero.starter.core.presentation.reusables.topbar.DefaultTopBar
 import com.kotlinhero.starter.core.presentation.theme.starterColors
 import com.kotlinhero.starter.core.presentation.theme.starterTypography
 import com.kotlinhero.starter.core.utils.getActivity
+import com.kotlinhero.starter.features.auth.presentation.navigation.AuthDestinations
 import com.kotlinhero.starter.features.auth.presentation.viewmodels.LoginViewModel
 import com.kotlinhero.starter.res.R
 import org.koin.androidx.compose.koinViewModel
 
-class LoginScreen(private val onAuthentication: () -> Unit = {}) : Screen {
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun LoginScreen(
+    onAuthentication: () -> Unit,
+    navController: NavController,
+) {
+    val viewModel: LoginViewModel = koinViewModel()
+    val state by viewModel.state.collectAsStateWithLifecycle()
 
-    @OptIn(ExperimentalMaterial3Api::class)
-    @Composable
-    override fun Content() {
-        val viewModel: LoginViewModel = koinViewModel()
-        val navigator = LocalNavigator.currentOrThrow
+    val context = LocalContext.current
+    val activity = context.getActivity() as? AppCompatActivity
 
-        val state by viewModel.state.collectAsStateWithLifecycle()
-
-        val context = LocalContext.current
-        val activity = context.getActivity() as? AppCompatActivity
-
-        LaunchedEffect(state.biometricResultState) {
-            when {
-                state.biometricResultState.isRequiresSetup -> {
-                    viewModel.resetBiometricLoginResultState()
-                    navigator.push(BiometricLoginSetupScreen())
-                }
-                state.biometricResultState.isSuccess -> {
-                    viewModel.resetBiometricLoginResultState()
-                    onAuthentication()
-                }
+    LaunchedEffect(state.biometricResultState) {
+        when {
+            state.biometricResultState.isRequiresSetup -> {
+                viewModel.resetBiometricLoginResultState()
+                navController.navigate(AuthDestinations.BiometricAuthSetup)
+            }
+            state.biometricResultState.isSuccess -> {
+                viewModel.resetBiometricLoginResultState()
+                onAuthentication()
             }
         }
+    }
 
-        LaunchedEffect(state.loginResultState) {
-            when {
-                state.loginResultState.isSuccess -> {
-                    viewModel.resetLoginResultState()
-                    onAuthentication()
-                }
+    LaunchedEffect(state.loginResultState) {
+        when {
+            state.loginResultState.isSuccess -> {
+                viewModel.resetLoginResultState()
+                onAuthentication()
             }
         }
+    }
 
-        if (state.loginResultState.isLoading) {
-            LoadingDialog()
-        }
+    if (state.loginResultState.isLoading) {
+        LoadingDialog()
+    }
 
-        if (state.loginResultState.isError) {
-            ErrorDialog(
-                onDismissRequest = viewModel::resetLoginResultState,
-                subtitle = state.loginResultState.failureOrNull?.getHumanReadableMessage() ?: ""
+    if (state.loginResultState.isError) {
+        ErrorDialog(
+            onDismissRequest = viewModel::resetLoginResultState,
+            subtitle = state.loginResultState.failureOrNull?.getHumanReadableMessage() ?: ""
+        )
+    }
+
+    Scaffold(
+        topBar = { DefaultTopBar(showBackButton = false) },
+        containerColor = MaterialTheme.starterColors.background,
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp)
+                .padding(paddingValues = innerPadding)
+                .verticalScroll(rememberScrollState()),
+        ) {
+            Spacer(modifier = Modifier.height(45.dp))
+            Text(
+                text = stringResource(R.string.login_to_your_account),
+                style = MaterialTheme.starterTypography.displayThree.copy(
+                    color = MaterialTheme.starterColors.baseBlack
+                )
             )
-        }
-
-        Scaffold(
-            topBar = { DefaultTopBar(showBackButton = false) },
-            containerColor = MaterialTheme.starterColors.background,
-        ) { innerPadding ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 16.dp)
-                    .padding(paddingValues = innerPadding)
-                    .verticalScroll(rememberScrollState()),
-            ) {
-                Spacer(modifier = Modifier.height(45.dp))
-                Text(
-                    text = stringResource(R.string.login_to_your_account),
-                    style = MaterialTheme.starterTypography.displayThree.copy(
-                        color = MaterialTheme.starterColors.baseBlack
+            Spacer(modifier = Modifier.height(32.dp))
+            NormalTextField(
+                value = state.email,
+                onValueChange = viewModel::onEmailChange,
+                hint = stringResource(R.string.email),
+                prefix = { isFocused ->
+                    val color =
+                        if (isFocused) MaterialTheme.starterColors.neutrals500 else MaterialTheme.starterColors.neutrals200
+                    Icon(
+                        modifier = Modifier.size(24.dp),
+                        painter = painterResource(R.drawable.ic_mail),
+                        tint = color,
+                        contentDescription = null,
                     )
-                )
-                Spacer(modifier = Modifier.height(32.dp))
-                NormalTextField(
-                    value = state.email,
-                    onValueChange = viewModel::onEmailChange,
-                    hint = stringResource(R.string.email),
-                    prefix = { isFocused ->
-                        val color =
-                            if (isFocused) MaterialTheme.starterColors.neutrals500 else MaterialTheme.starterColors.neutrals200
-                        Icon(
-                            modifier = Modifier.size(24.dp),
-                            painter = painterResource(R.drawable.ic_mail),
-                            tint = color,
-                            contentDescription = null,
-                        )
-                    },
-                    isError = state.emailValidationState.isInvalid,
-                    errorMessage = state.emailValidationState.errorMessageOrNull
-                )
-                Spacer(modifier = Modifier.height(12.dp))
-                NormalTextField(
-                    value = state.password,
-                    onValueChange = viewModel::onPasswordChange,
-                    hint = stringResource(R.string.password),
-                    prefix = { isFocused ->
-                        val color =
-                            if (isFocused) MaterialTheme.starterColors.neutrals500 else MaterialTheme.starterColors.neutrals200
-                        Icon(
-                            modifier = Modifier.size(20.dp),
-                            painter = painterResource(R.drawable.ic_lock),
-                            tint = color,
-                            contentDescription = null,
-                        )
-                    },
-                    visualTransformation = PasswordVisualTransformation(),
-                )
-                Spacer(modifier = Modifier.height(32.dp))
-                NormalButton(
-                    text = stringResource(R.string.login),
-                    onClick = viewModel::login,
-                    modifier = Modifier.fillMaxWidth()
-                )
-                if(state.isBiometricAvailable) {
-                    Spacer(modifier = Modifier.height(16.dp))
-                    NormalOutlinedButton(
-                        modifier = Modifier.fillMaxWidth(),
-                        text = stringResource(R.string.biometric_login),
-                        onClick = { viewModel.biometricLogin(activity) }
+                },
+                isError = state.emailValidationState.isInvalid,
+                errorMessage = state.emailValidationState.errorMessageOrNull
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+            NormalTextField(
+                value = state.password,
+                onValueChange = viewModel::onPasswordChange,
+                hint = stringResource(R.string.password),
+                prefix = { isFocused ->
+                    val color =
+                        if (isFocused) MaterialTheme.starterColors.neutrals500 else MaterialTheme.starterColors.neutrals200
+                    Icon(
+                        modifier = Modifier.size(20.dp),
+                        painter = painterResource(R.drawable.ic_lock),
+                        tint = color,
+                        contentDescription = null,
                     )
-                }
-                Spacer(modifier = Modifier.height(32.dp))
-                Row(
+                },
+                visualTransformation = PasswordVisualTransformation(),
+            )
+            Spacer(modifier = Modifier.height(32.dp))
+            NormalButton(
+                text = stringResource(R.string.login),
+                onClick = viewModel::login,
+                modifier = Modifier.fillMaxWidth()
+            )
+            if(state.isBiometricAvailable) {
+                Spacer(modifier = Modifier.height(16.dp))
+                NormalOutlinedButton(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Text(
-                        text = stringResource(R.string.don_t_have_an_account),
-                        style = MaterialTheme.starterTypography.body12Regular.copy(
-                            color = MaterialTheme.starterColors.neutrals500
-                        )
+                    text = stringResource(R.string.biometric_login),
+                    onClick = { viewModel.biometricLogin(activity) }
+                )
+            }
+            Spacer(modifier = Modifier.height(32.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = stringResource(R.string.don_t_have_an_account),
+                    style = MaterialTheme.starterTypography.body12Regular.copy(
+                        color = MaterialTheme.starterColors.neutrals500
                     )
-                    Spacer(modifier = Modifier.width(2.dp))
-                    Text(
-                        text = stringResource(R.string.register),
-                        style = MaterialTheme.starterTypography.body12Regular.copy(
-                            color = MaterialTheme.starterColors.primary
-                        ),
-                        modifier = Modifier.clickable(
-                            interactionSource = remember { MutableInteractionSource() },
-                            indication = null,
-                            onClick = {
-                                navigator.push(
-                                    RegisterScreen(
-                                        onRegistration = {
-                                            // Return to LoginScreen
-                                            navigator.pop()
-                                            onAuthentication()
-                                        }
-                                    )
-                                )
-                            },
-                        )
+                )
+                Spacer(modifier = Modifier.width(2.dp))
+                Text(
+                    text = stringResource(R.string.register),
+                    style = MaterialTheme.starterTypography.body12Regular.copy(
+                        color = MaterialTheme.starterColors.primary
+                    ),
+                    modifier = Modifier.clickable(
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = null,
+                        onClick = {
+                            navController.navigate(AuthDestinations.Register)
+                        },
                     )
-                }
+                )
             }
         }
     }
